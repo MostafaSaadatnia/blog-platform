@@ -27,6 +27,7 @@
               }
             ],
             "styles": [
+              "src/tailwind.css",
               "src/styles.scss"
             ],
             "server": "src/main.server.ts",
@@ -49,7 +50,8 @@
                   "maximumError": "8kB"
                 }
               ],
-              "outputHashing": "all"
+              "outputHashing": "all",
+              "serviceWorker": "ngsw-config.json"
             },
             "development": {
               "optimization": false,
@@ -86,11 +88,15 @@
               }
             ],
             "styles": [
+              "src/tailwind.css",
               "src/styles.scss"
             ]
           }
         }
       }
     }
+  },
+  "cli": {
+    "analytics": "cf7cb080-1e3a-433d-9990-642d07fe78c2"
   }
 }
