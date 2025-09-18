@@ -8,18 +8,25 @@
     "build:ssr": "ng build && ng run blog-platform:server",
     "serve:ssr": "ng serve --ssr",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test",
+    "test": "vitest",
+    "test:ci": "vitest run --coverage",
     "lint": "ng lint",
     "format": "prettier --write \"**/*.{ts,js,html,scss,md,json}\"",
     "cz": "cz",
     "prepare": "husky"
   },
   "lint-staged": {
-    "*.{ts,js}": ["eslint --cache --fix"],
-    "*.{html,scss,md,json}": ["prettier --write"]
+    "*.{ts,js}": [
+      "eslint --cache --fix"
+    ],
+    "*.{html,scss,md,json}": [
+      "prettier --write"
+    ]
   },
   "config": {
-    "commitizen": { "path": "cz-git" }
+    "commitizen": {
+      "path": "cz-git"
+    }
   },
   "private": true,
   "dependencies": {
@@ -45,6 +52,7 @@
     "tslib": "^2.3.0"
   },
   "devDependencies": {
+    "@analogjs/vitest-angular": "^1.21.0",
     "@angular/build": "^20.3.2",
     "@angular/cli": "^20.3.2",
     "@angular/compiler-cli": "^20.3.0",
@@ -52,16 +60,14 @@
     "@commitlint/config-conventional": "^19.8.1",
     "@tailwindcss/postcss": "^4.1.13",
     "@types/express": "^5.0.1",
-    "@types/jasmine": "~5.1.0",
-    "@types/node": "^20.17.19",
+    "@types/node": "^20.19.17",
     "angular-eslint": "20.3.0",
     "commitizen": "^4.3.1",
     "cz-git": "^1.12.0",
     "eslint": "^9.35.0",
     "eslint-config-prettier": "^10.1.8",
+    "happy-dom": "^18.0.1",
     "husky": "^9.1.7",
-    "jasmine-core": "~5.9.0",
-    "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.2.0",
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
@@ -70,6 +76,7 @@
     "prettier": "^3.6.2",
     "tailwindcss": "^4.1.13",
     "typescript": "~5.9.2",
-    "typescript-eslint": "8.40.0"
+    "typescript-eslint": "8.40.0",
+    "vitest": "^3.2.4"
   }
 }
