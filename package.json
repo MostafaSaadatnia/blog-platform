@@ -44,6 +44,7 @@
     "@ngrx/effects": "^20.0.1",
     "@ngrx/entity": "^20.0.1",
     "@ngrx/router-store": "^20.0.1",
+    "@ngrx/signals": "^20.0.1",
     "@ngrx/store": "^20.0.1",
     "@ngrx/store-devtools": "^20.0.1",
     "express": "^5.1.0",
