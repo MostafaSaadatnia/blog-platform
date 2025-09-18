@@ -6,19 +6,20 @@ import { RouterModule } from '@angular/router';
 
 
 import { PostCard } from '@/features/posts/components/post-card/post-card';
-import { PostsStore } from '@/features/posts/posts.store';
+import { PostsStore } from '@/features/posts/store/posts.store';
 
 @Component({
   selector: 'app-posts-list',
   standalone: true,
- imports: [CommonModule, RouterModule, MatPaginatorModule, MatProgressSpinnerModule, PostCard],
+  imports: [CommonModule, RouterModule, MatPaginatorModule, MatProgressSpinnerModule, PostCard],
   template: `
  <section class="container mx-auto p-4">
       <h1 class="text-3xl font-bold mb-4">Posts</h1>
 
-      <div class="min-h-10" *ngIf="store.loading()">
+      @if(store.loading()){<div class="min-h-10">
         <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
       </div>
+      }
 
       <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         @for (a of store.articles(); track a.slug) {
@@ -40,7 +41,7 @@ import { PostsStore } from '@/features/posts/posts.store';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 
-export default class PostsListComponent implements OnInit {
+export default class PostsList implements OnInit {
   store = inject(PostsStore) as InstanceType<typeof PostsStore>;
 
   ngOnInit(): void {

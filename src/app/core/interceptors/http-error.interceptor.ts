@@ -1,4 +1,6 @@
 import { HttpInterceptorFn } from '@angular/common/http';
 
-export const HttpErrorInterceptor: HttpInterceptorFn = (req, next) =>
-  next(req);
+
+export const httpErrorInterceptor: HttpInterceptorFn = (req, next) =>
+  next(req).pipe(
+  );

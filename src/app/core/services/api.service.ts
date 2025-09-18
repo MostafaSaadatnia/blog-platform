@@ -4,7 +4,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 @Injectable({ providedIn: 'root' })
 export class ApiService {
   private http = inject(HttpClient);
-  private readonly baseUrl = 'https://api.realworld.io/api';
+  private readonly baseUrl = 'https://api.realworld.build/api';
 
   get<T>(url: string, params?: Record<string, any>) {
     const httpParams = new HttpParams({ fromObject: params ?? {} });
