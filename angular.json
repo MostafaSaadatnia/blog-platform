@@ -59,12 +59,9 @@
               "sourceMap": true
             },
             "pages": {
-              "outputMode": "browser",
-              "baseHref": "/blog-platform/",
-              "serviceWorker": false,
-              "optimization": true,
-              "extractLicenses": true,
-              "sourceMap": false
+              "outputPath": "dist/pages",
+              "baseHref": "blog-platform",
+              "deployUrl": "blog-platform"
             }
           },
           "defaultConfiguration": "production"
@@ -79,12 +76,9 @@
               "buildTarget": "blog-platform:build:development"
             },
             "pages": {
-              "outputMode": "browser",
-              "baseHref": "/blog-platform/",
-              "serviceWorker": false,
-              "optimization": true,
-              "extractLicenses": true,
-              "sourceMap": false
+              "outputPath": "dist/pages",
+              "baseHref": "blog-platform",
+              "deployUrl": "blog-platform"
             }
           },
           "defaultConfiguration": "development"
