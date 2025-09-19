@@ -55,23 +55,29 @@ API: `https://api.realworld.show/api`
 ### Install
 ```bash
 npm i
-
-Development (SSR)
+```
+## Development (SSR)
+```bash
 npm start
-# http://localhost:4200
 
-Build
+http://localhost:4200
+```
+
+## Build
 npm run build         # client build (SSR output mode)
 npm run build:ssr     # client + server bundle
 
-Serve SSR (dev)
+## Serve SSR (dev)
 npm run serve:ssr
 
-Tests
+## Tests
+```
 npm test          # vitest watch
 npm run test:ci   # CI mode with coverage
+```
 
-Project Structure
+## Project Structure
+```
 src/
 ├─ app/
 │  ├─ core/                      # singletons & cross-cutting
@@ -97,10 +103,10 @@ src/
 │  └─ store/                     # (optional) app-level items
 ├─ styles.scss                   # tokens + global polish + theme use
 └─ material-theme.scss           # Material 3 theme (light/dark)
+```
+## Architecture
 
-Architecture
-
-Separation of Concerns
+### Separation of Concerns
 
 Service (HTTP): Pure transport, no UI/state (e.g., ArticleService, CommentsService).
 
@@ -118,7 +124,7 @@ Feature: self-contained vertical slices: pages/components/store/services.
 
 This layout scales: add a feature by cloning a proven pattern (service → store → UI).
 
-Why These Technologies?
+### Why These Technologies?
 
 Angular 20 + Standalone: fewer NgModules, better tree-shaking, simpler mental model.
 
@@ -132,7 +138,7 @@ Reactive Forms: robust validation, server error mapping (422) into controls, gre
 
 Markdown: marked + Angular sanitizer via [innerHTML] for safe, SSR-friendly content.
 
-State Management
+### State Management
 
 Signals Store (@ngrx/signals): withState for shape, withMethods for side-effects.
 
@@ -140,7 +146,7 @@ Stores orchestrate API calls, handle loading/error flags, and update state slice
 
 Components consume signals directly; no manual subscriptions or teardown.
 
-Performance
+### Performance
 
 Lazy-loaded routes with loadComponent.
 
@@ -150,7 +156,7 @@ Angular 20 control flow (@if, @for) with track keys (slug/id).
 
 SSR-safe theme/localStorage initialization (no top-level document access).
 
-UX / UI
+### UX / UI
 
 Material 3 theming (light/dark); runtime theme switcher via CSS class scopes.
 
@@ -164,18 +170,18 @@ Editor: Reactive Forms, inline validation, server-error mapping, progress bar wh
 
 Comments Thread: clean list, add/delete (when authenticated), independent store.
 
-Testing
+### Testing
 
 Service tests with HttpClientTestingModule (e.g., paging, error cases).
 
 Component tests for validation (e.g., Editor).
 
 Run:
-
+```bash
 npm test
 npm run test:ci
-
-Developer Experience
+```
+## Developer Experience
 
 ESLint + Prettier for consistency.
 
@@ -185,7 +191,7 @@ Tailwind compatibility fixes for MDC outlined inputs (prevent “double border�
 
 Theming via material-theme.scss and @use (M3 API), referenced in styles.scss.
 
-Design Decisions (ADRs)
+## Design Decisions (ADRs)
 
 Signals over Classic NgRx: App size does not justify actions/reducers boilerplate. Signals keep state explicit and ergonomic while staying scalable.
 
@@ -197,7 +203,7 @@ Service ↔ Store ↔ UI: Single responsibility per layer; easier testing and ma
 
 Reactive Forms + Server Mapping: Strong UX for forms and predictable error presentation.
 
-Challenge Checklist
+### Challenge Checklist
 
  Angular (>=15) with modular, scalable architecture (Core/Shared/Feature)
 
@@ -217,8 +223,6 @@ Challenge Checklist
 
  Documentation: this README explains architecture & tech choices
 
-License
+### License
 
 MIT — use freely, attribution appreciated.
-
-::contentReference[oaicite:0]{index=0}
