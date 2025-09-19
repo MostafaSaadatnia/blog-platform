@@ -8,11 +8,12 @@ import { PostsStore } from '../../store/posts.store';
 import { MarkdownPipe } from '@shared/pipes/markdown.pipe';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '@shared/components/confirm-dialog/confirm-dialog';
+import { CommentsThreadComponent } from '@features/post/components/comments-thread/comments-thread';
 
 @Component({
   selector: 'app-post-detail',
   standalone: true,
-  imports: [CommonModule, RouterModule, MatButtonModule, MatIconModule, MatCardModule, MarkdownPipe],
+  imports: [CommonModule, RouterModule, MatButtonModule, MatIconModule, MatCardModule, MarkdownPipe, CommentsThreadComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   styles: [`
     .container { max-width: 900px; margin-inline: auto; padding: 1rem; }
@@ -47,6 +48,11 @@ import { ConfirmDialogComponent } from '@shared/components/confirm-dialog/confir
 
         <mat-card class="panel">
           <div class="prose" [innerHTML]="(c.body || c.description) | markdown"></div>
+        </mat-card>
+
+             <mat-card class="panel" style="margin-top:12px;">
+          <h2 style="margin:0 0 8px; font-weight:700;">Comments</h2>
+          <app-comments-thread [slug]="c.slug" [canPost]="true" [allowDelete]="true" />
         </mat-card>
       } @else {
         <div class="panel">Loading…</div>
