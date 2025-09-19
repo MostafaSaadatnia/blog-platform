@@ -26,6 +26,9 @@ export const appConfig: ApplicationConfig = {
       //   AuthTokenInterceptor,
       //   HttpErrorInterceptor,
       // ]),
-    ),
+    ), provideServiceWorker('ngsw-worker.js', {
+            enabled: !isDevMode(),
+            registrationStrategy: 'registerWhenStable:30000'
+          }),
   ],
 };
