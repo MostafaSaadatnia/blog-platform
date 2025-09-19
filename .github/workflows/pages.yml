@@ -20,9 +20,7 @@ jobs:
           node-version: 20
           cache: 'npm'
       - run: npm ci
-      # اگر پروژه SSR است، همین build هم فولدر browser می‌سازد.
       - run: npm run build -- --configuration=pages
-      # SPA fallback برای رفرش روی مسیرهای روت
       - name: Add SPA 404.html
         run: |
           if [ -d "dist/pages/browser" ]; then
