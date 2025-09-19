@@ -1,12 +1,14 @@
-import { Component, signal } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { OnlineOfflineToastComponent } from './shared/components/online-offline-toast/online-offline-toast';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
-  templateUrl: './app.html',
-  styleUrl: './app.scss'
+  standalone: true,
+  imports: [RouterOutlet, OnlineOfflineToastComponent],
+  template: `
+    <router-outlet />
+    <app-online-offline-toast />
+  `,
 })
-export class App {
-  protected readonly title = signal('blog-platform');
-}
+export class App {}

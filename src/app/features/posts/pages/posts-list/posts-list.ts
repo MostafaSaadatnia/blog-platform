@@ -5,13 +5,13 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { RouterModule } from '@angular/router';
 
 
-import { PostCard } from '@/features/posts/components/post-card/post-card';
+import { PostCardComponent } from '@/features/posts/components/post-card/post-card';
 import { PostsStore } from '@/features/posts/store/posts.store';
 
 @Component({
   selector: 'app-posts-list',
   standalone: true,
-  imports: [CommonModule, RouterModule, MatPaginatorModule, MatProgressSpinnerModule, PostCard],
+  imports: [CommonModule, RouterModule, MatPaginatorModule, MatProgressSpinnerModule, PostCardComponent],
   template: `
  <section class="container mx-auto p-4">
       <h1 class="text-3xl font-bold mb-4">Posts</h1>

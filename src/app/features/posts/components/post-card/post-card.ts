@@ -25,6 +25,6 @@ import { ArticleDto } from '@/shared/models/article.model';
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PostCard {
+export class PostCardComponent{
   @Input({ required: true }) article!: ArticleDto;
 }
