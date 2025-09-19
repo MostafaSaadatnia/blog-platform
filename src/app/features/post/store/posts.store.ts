@@ -1,7 +1,7 @@
 import { inject } from '@angular/core';
 import { signalStore, withState, withMethods, patchState } from '@ngrx/signals';
-import { ArticleDto } from '@/shared/models/article.model';
-import { ArticleService } from '@/features/post/services/article.service';
+import { ArticleDto } from '@shared/models/article.model';
+import { ArticleService } from '@features/post/services/article.service';
 
 interface PostsState {
   page: number;
@@ -68,7 +68,7 @@ export const PostsStore = signalStore(
           loadPage(1, store.pageSize());
         },
         error: (err) => {
-          patchState(store, { loading: false, error: (err as any)?.message ?? 'Create failed' });
+          patchState(store, { loading: false, error: (err as Error)?.message ?? 'Create failed' });
           onError?.(err);
         }
       });
