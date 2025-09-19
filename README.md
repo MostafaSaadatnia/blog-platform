@@ -108,73 +108,73 @@ src/
 
 ### Separation of Concerns
 
-Service (HTTP): Pure transport, no UI/state (e.g., ArticleService, CommentsService).
+- Service (HTTP): Pure transport, no UI/state (e.g., ArticleService, CommentsService).
 
-Store (Signals): Holds state & effects (loadPage, loadOne, createOne, updateOne, deleteOne). Explicit transitions and error handling.
+- Store (Signals): Holds state & effects (loadPage, loadOne, createOne, updateOne, deleteOne). Explicit transitions and error handling.
 
-UI (Pages/Components): Declarative templates, Reactive Forms, no business logic.
+- UI (Pages/Components): Declarative templates, Reactive Forms, no business logic.
 
-Module Boundaries
+- Module Boundaries
 
-Core: singletons (API client, theme), interceptors, platform concerns.
+- Core: singletons (API client, theme), interceptors, platform concerns.
 
-Shared: reusable UI atoms, DTOs, pipes, utilities.
+- Shared: reusable UI atoms, DTOs, pipes, utilities.
 
-Feature: self-contained vertical slices: pages/components/store/services.
+- Feature: self-contained vertical slices: pages/components/store/services.
 
-This layout scales: add a feature by cloning a proven pattern (service → store → UI).
+- This layout scales: add a feature by cloning a proven pattern (service → store → UI).
 
 ### Why These Technologies?
 
-Angular 20 + Standalone: fewer NgModules, better tree-shaking, simpler mental model.
+- Angular 20 + Standalone: fewer NgModules, better tree-shaking, simpler mental model.
 
-SSR: faster first paint, SEO-friendly; guarded browser APIs (isPlatformBrowser) to prevent SSR crashes.
+- SSR: faster first paint, SEO-friendly; guarded browser APIs (isPlatformBrowser) to prevent SSR crashes.
 
-Material 3 (MDC): accessible color system, consistent components, and tokens for density/shape/typography.
+- Material 3 (MDC): accessible color system, consistent components, and tokens for density/shape/typography.
 
-NgRx Signals Store: deterministic state without classic NgRx boilerplate; perfect fit for medium-size apps.
+- NgRx Signals Store: deterministic state without classic NgRx boilerplate; perfect fit for medium-size apps.
 
-Reactive Forms: robust validation, server error mapping (422) into controls, great UX for forms.
+- Reactive Forms: robust validation, server error mapping (422) into controls, great UX for forms.
 
-Markdown: marked + Angular sanitizer via [innerHTML] for safe, SSR-friendly content.
+- Markdown: marked + Angular sanitizer via [innerHTML] for safe, SSR-friendly content.
 
 ### State Management
 
-Signals Store (@ngrx/signals): withState for shape, withMethods for side-effects.
+- Signals Store (@ngrx/signals): withState for shape, withMethods for side-effects.
 
-Stores orchestrate API calls, handle loading/error flags, and update state slices.
+- Stores orchestrate API calls, handle loading/error flags, and update state slices.
 
-Components consume signals directly; no manual subscriptions or teardown.
+- Components consume signals directly; no manual subscriptions or teardown.
 
 ### Performance
 
-Lazy-loaded routes with loadComponent.
+- Lazy-loaded routes with loadComponent.
 
-OnPush change detection across feature pages/components.
+- OnPush change detection across feature pages/components.
 
-Angular 20 control flow (@if, @for) with track keys (slug/id).
+- Angular 20 control flow (@if, @for) with track keys (slug/id).
 
-SSR-safe theme/localStorage initialization (no top-level document access).
+- SSR-safe theme/localStorage initialization (no top-level document access).
 
 ### UX / UI
 
-Material 3 theming (light/dark); runtime theme switcher via CSS class scopes.
+- Material 3 theming (light/dark); runtime theme switcher via CSS class scopes.
 
-Global tokens: --app-surface, --app-border, --app-radius for cohesive visuals.
+- Global tokens: --app-surface, --app-border, --app-radius for cohesive visuals.
 
-Posts List: responsive grid + outlined paginator; hover elevation on cards.
+- Posts List: responsive grid + outlined paginator; hover elevation on cards.
 
-Post Detail: Markdown .prose typography, cover image derived from slug.
+- Post Detail: Markdown .prose typography, cover image derived from slug.
 
-Editor: Reactive Forms, inline validation, server-error mapping, progress bar while submitting, snackbar feedback.
+- Editor: Reactive Forms, inline validation, server-error mapping, progress bar while submitting, snackbar feedback.
 
-Comments Thread: clean list, add/delete (when authenticated), independent store.
+- Comments Thread: clean list, add/delete (when authenticated), independent store.
 
 ### Testing
 
-Service tests with HttpClientTestingModule (e.g., paging, error cases).
+- Service tests with HttpClientTestingModule (e.g., paging, error cases).
 
-Component tests for validation (e.g., Editor).
+- Component tests for validation (e.g., Editor).
 
 Run:
 ```bash
@@ -183,45 +183,45 @@ npm run test:ci
 ```
 ## Developer Experience
 
-ESLint + Prettier for consistency.
+- ESLint + Prettier for consistency.
 
-Husky pre-push runs tests in CI mode to keep main green.
+- Husky pre-push runs tests in CI mode to keep main green.
 
-Tailwind compatibility fixes for MDC outlined inputs (prevent “double border”).
+- Tailwind compatibility fixes for MDC outlined inputs (prevent “double border”).
 
-Theming via material-theme.scss and @use (M3 API), referenced in styles.scss.
+- Theming via material-theme.scss and @use (M3 API), referenced in styles.scss.
 
 ## Design Decisions (ADRs)
 
-Signals over Classic NgRx: App size does not justify actions/reducers boilerplate. Signals keep state explicit and ergonomic while staying scalable.
+- Signals over Classic NgRx: App size does not justify actions/reducers boilerplate. Signals keep state explicit and ergonomic while staying scalable.
 
-SSR-first: For SEO/perceived performance; all browser-only APIs are guarded (theme initialization happens only in browser).
+- SSR-first: For SEO/perceived performance; all browser-only APIs are guarded (theme initialization happens only in browser).
 
-Class-scoped color layers: Enables runtime brand/dark switching without rebuilding styles.
+- Class-scoped color layers: Enables runtime brand/dark switching without rebuilding styles.
 
-Service ↔ Store ↔ UI: Single responsibility per layer; easier testing and maintenance.
+- Service ↔ Store ↔ UI: Single responsibility per layer; easier testing and maintenance.
 
-Reactive Forms + Server Mapping: Strong UX for forms and predictable error presentation.
+- Reactive Forms + Server Mapping: Strong UX for forms and predictable error presentation.
 
 ### Challenge Checklist
 
- Angular (>=15) with modular, scalable architecture (Core/Shared/Feature)
+-  Angular (>=15) with modular, scalable architecture (Core/Shared/Feature)
 
- Clean Code & Separation of Concerns (Service/Store/UI)
+-  Clean Code & Separation of Concerns (Service/Store/UI)
 
- State Management with Signals / NgRx Signals
+-  State Management with Signals / NgRx Signals
 
- Performance: Lazy Loading, OnPush, @for track keys
+-  Performance: Lazy Loading, OnPush, @for track keys
 
- UX/UI: Material 3, responsive design, dark/light themes
+-  UX/UI: Material 3, responsive design, dark/light themes
 
- Post Management: create/edit/delete with Reactive Forms + validation + server errors
+-  Post Management: create/edit/delete with Reactive Forms + validation + server errors
 
- Comments thread display (+ add/delete when authenticated)
+-  Comments thread display (+ add/delete when authenticated)
 
- Unit tests: at least one Service and one Component
+-  Unit tests: at least one Service and one Component
 
- Documentation: this README explains architecture & tech choices
+-  Documentation: this README explains architecture & tech choices
 
 ### License
 
