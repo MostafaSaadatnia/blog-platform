@@ -26,9 +26,8 @@ import { MatDividerModule } from '@angular/material/divider';
       </button>
       <mat-menu #brandMenu="matMenu">
         <button mat-menu-item (click)="toggleDark()">
-          <mat-icon>dark_mode</mat-icon>
-          <mat-icon>light_mode</mat-icon>
-          <span>Toggle dark</span>
+          <mat-icon>{{ !theme.isDark() ? 'dark_mode' : 'light_mode' }}</mat-icon>
+          <span>Toggle {{ !theme.isDark() ? 'Dark' : 'Light' }}</span>
         </button>
       </mat-menu>
     </mat-toolbar>
@@ -46,7 +45,7 @@ import { MatDividerModule } from '@angular/material/divider';
   `]
 })
 export class App implements OnInit {
-  private theme = inject(ThemeService);
+  protected theme = inject(ThemeService);
   constructor(@Inject(PLATFORM_ID) private platformId: object) { }
 
   ngOnInit(): void {
