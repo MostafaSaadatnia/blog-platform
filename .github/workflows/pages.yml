@@ -15,24 +15,36 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: 'npm'
+
       - run: npm ci
+
+
       - run: npm run build -- --configuration=pages
-      - name: Add SPA 404.html
+
+      - name: Choose artifact root
+        id: pickroot
         run: |
           if [ -d "dist/pages/browser" ]; then
-            cp dist/pages/browser/index.html dist/pages/browser/404.html
+            echo "ROOT=dist/pages/browser" >> $GITHUB_OUTPUT
           else
-            cp dist/pages/index.html dist/pages/404.html
+            echo "ROOT=dist/pages" >> $GITHUB_OUTPUT
           fi
+
+
+      - name: Add SPA 404 and nojekyll
+        run: |
+          cp "${{ steps.pickroot.outputs.ROOT }}/index.html" "${{ steps.pickroot.outputs.ROOT }}/404.html"
+          touch "${{ steps.pickroot.outputs.ROOT }}/.nojekyll"
+
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: |
-            dist/pages/browser
-            dist/pages
+          path: ${{ steps.pickroot.outputs.ROOT }}
+
   deploy:
     needs: build
     runs-on: ubuntu-latest
