@@ -1,24 +1,28 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { render, screen } from '@analogjs/vitest-angular';
 import { PostCardComponent } from './post-card';
-import { describe, beforeEach, it } from 'node:test';
+import { ArticleDto } from '@shared/models/article.model';
 
 describe('PostCardComponent', () => {
-  let component: PostCardComponent;
-  let fixture: ComponentFixture<PostCardComponent>;
+  const article: ArticleDto = {
+    slug: 'hello-world',
+    title: 'Hello World',
+    description: 'Desc',
+    body: 'Body',
+    tagList: ['hello', 'world'],
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+    favorited: false,
+    favoritesCount: 3,
+    author: { username: 'mo', following: false, image: '' }
+  };
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [PostCardComponent]
-    })
-    .compileComponents();
+  it('renders title and tags', async () => {
+    await render(PostCardComponent, {
+      componentInputs: { article }
+    });
 
-    fixture = TestBed.createComponent(PostCardComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
+    expect(screen.getByText('Hello World')).toBeInTheDocument();
+    expect(screen.getByText('hello')).toBeInTheDocument();
+    expect(screen.getByText('world')).toBeInTheDocument();
   });
 });
