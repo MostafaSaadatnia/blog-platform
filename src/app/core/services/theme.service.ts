@@ -44,6 +44,10 @@ export class ThemeService {
     this.applyDark(this.dark);
   }
 
+  public isDark(): boolean {
+    return this.dark;
+  }
+
   private applyBrand(id: ThemeId): void {
     if (!this.isBrowser) return;
     const root = this.doc.documentElement;

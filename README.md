@@ -1,41 +1,64 @@
-Blog Platform — Angular 20, Material 3, SSR
+# Blog Platform · Angular 20 · Material 3 · SSR
 
-A clean, scalable, and production-ready RealWorld client with modern Angular patterns.
+![Angular](https://img.shields.io/badge/Angular-20-red)
+![Material](https://img.shields.io/badge/UI-Material%20Design%203-blue)
+![State](https://img.shields.io/badge/State-NgRx%20Signals-5C2D91)
+![SSR](https://img.shields.io/badge/Rendering-SSR%20%2B%20Vite-8A2BE2)
+![Tests](https://img.shields.io/badge/Tests-Vitest-brightgreen)
+![Lint](https://img.shields.io/badge/Code%20Style-ESLint%20%2B%20Prettier-yellow)
 
-This repository demonstrates a senior-level Angular application: SSR-ready, Material 3 themed (light/dark + brand variants), scalable feature boundaries, NgRx Signals Store for state, clean separation of concerns, and a polished UX.
-API: RealWorld Conduit
+> A production-grade RealWorld client built with modern Angular patterns: **Standalone Components**, **NgRx Signals Store**, **Material 3** theming (light/dark), **SSR**, clean separation of concerns, and polished UX.
 
-✨ Highlights
+API: `https://api.realworld.show/api`
 
-Angular 20 standalone components + SSR with Vite dev server
+---
 
-Material 3 (MDC) design system, theming (light/dark) + runtime theme switcher
+## Table of Contents
 
-NgRx Signals Store: minimal boilerplate, explicit state transitions, composable
+- [Features](#features)
+- [Getting Started](#getting-started)
+- [Project Structure](#project-structure)
+- [Architecture](#architecture)
+- [Why These Technologies?](#why-these-technologies)
+- [State Management](#state-management)
+- [Performance](#performance)
+- [UX / UI](#ux--ui)
+- [Testing](#testing)
+- [Developer Experience](#developer-experience)
+- [Design Decisions (ADRs)](#design-decisions-adrs)
+- [Challenge Checklist](#challenge-checklist)
+- [License](#license)
 
-Reactive Forms: create/edit posts, server-side error mapping, strong validation
+---
 
-Comments thread: modular service + store + UI (read/add/delete when auth available)
+## Features
 
-Performance: lazy routes, OnPush, tracked @for, SSR-safe services
+- **Angular 20** with **Standalone** components and **SSR**
+- **Material 3 (MDC)** theme: light/dark + runtime switching
+- **NgRx Signals Store** for deterministic, minimal-boilerplate state
+- **Posts**: list with pagination, responsive grid
+- **Post Detail**: Markdown rendering + cover placeholder
+- **Post Editor**: Reactive Forms (create/edit), server-error mapping, validation
+- **Comments Thread**: modular service + store + UI (read/add/delete when authenticated)
+- **Clean architecture**: Service ↔ Store ↔ UI separation
+- **Tooling**: Vitest, ESLint + Prettier, Husky pre-push
 
-Tooling: Vitest unit tests, ESLint + Prettier, Husky pre-push (CI safety)
+---
 
-🚀 Getting Started
-Prerequisites
+## Getting Started
 
-Node.js ≥ 18
+### Prerequisites
+- Node.js ≥ 18
+- NPM or PNPM
+- (Windows) Git Bash recommended for running Husky shell hooks
 
-PNPM or NPM (examples use NPM)
-
-Git Bash (Windows) recommended for Husky shell hooks
-
-Install
+### Install
+```bash
 npm i
 
 Development (SSR)
 npm start
-# Local: http://localhost:4200
+# http://localhost:4200
 
 Build
 npm run build         # client build (SSR output mode)
@@ -48,238 +71,154 @@ Tests
 npm test          # vitest watch
 npm run test:ci   # CI mode with coverage
 
-
-Husky: a pre-push hook runs npm run test:ci.
-If you’re on Windows/PowerShell, ensure the hook exists at .husky/pre-push and uses LF line endings.
-
-🧭 Project Structure & Architecture
+Project Structure
 src/
- ┣ app/
- ┃ ┣ core/                     # singletons & cross-cutting concerns
- ┃ ┃ ┣ interceptors/
- ┃ ┃ ┗ services/
- ┃ ┃    ┣ api.service.ts       # HTTP boundary to RealWorld API
- ┃ ┃    ┗ theme.service.ts     # SSR-safe theme toggling (light/dark/brand)
- ┃ ┣ features/
- ┃ ┃ ┣ posts/                  # listing feature (read)
- ┃ ┃ ┃ ┣ components/
- ┃ ┃ ┃ ┣ pages/
- ┃ ┃ ┃ ┗ store/                # NgRx Signals store for list/paging
- ┃ ┃ ┗ post/                   # single post feature (details/editor/comments)
- ┃ ┃    ┣ components/comments-thread/
- ┃ ┃    ┣ pages/post-details/
- ┃ ┃    ┣ pages/editor/
- ┃ ┃    ┗ services/            # article/comments services (HTTP only)
- ┃ ┣ shared/
- ┃ ┃ ┣ components/             # UI atoms (e.g., confirm-dialog)
- ┃ ┃ ┣ models/                 # DTOs
- ┃ ┃ ┣ pipes/                  # markdown pipe
- ┃ ┃ ┗ utils/                  # form error mapper, cover util, etc.
- ┃ ┗ store/                    # (optional) app-wide store/meta
- ┣ styles.scss                 # tokens + global polish + M3 theme use
- ┣ material-theme.scss         # Material 3 theme definitions (light/dark)
+├─ app/
+│  ├─ core/                      # singletons & cross-cutting
+│  │  ├─ interceptors/
+│  │  └─ services/
+│  │     ├─ api.service.ts       # HTTP boundary to RealWorld
+│  │     └─ theme.service.ts     # SSR-safe theme toggling
+│  ├─ features/
+│  │  ├─ posts/                  # list feature
+│  │  │  ├─ components/
+│  │  │  ├─ pages/
+│  │  │  └─ store/               # Signals store (list/paging)
+│  │  └─ post/                   # single post feature
+│  │     ├─ components/comments-thread/
+│  │     ├─ pages/post-details/
+│  │     ├─ pages/editor/
+│  │     └─ services/            # article/comments HTTP only
+│  ├─ shared/
+│  │  ├─ components/             # UI atoms (confirm-dialog, etc.)
+│  │  ├─ models/                 # DTOs
+│  │  ├─ pipes/                  # markdown
+│  │  └─ utils/                  # form error mapper, cover util
+│  └─ store/                     # (optional) app-level items
+├─ styles.scss                   # tokens + global polish + theme use
+└─ material-theme.scss           # Material 3 theme (light/dark)
 
-Layering & Separation of Concerns
+Architecture
 
-Core: singletons (API client, theme), HTTP interceptors.
+Separation of Concerns
 
-Features: each domain has Service (HTTP) → Store (state/effects) → UI (pages/components).
-No business logic in components, no UI in services. Stores orchestrate async & state transitions.
+Service (HTTP): Pure transport, no UI/state (e.g., ArticleService, CommentsService).
 
-Shared: reusable atoms (dialog), DTOs, pipes (Markdown), utilities (server error mapper).
+Store (Signals): Holds state & effects (loadPage, loadOne, createOne, updateOne, deleteOne). Explicit transitions and error handling.
 
-This yields:
+UI (Pages/Components): Declarative templates, Reactive Forms, no business logic.
 
-Modularity: features are self-contained and easy to evolve.
+Module Boundaries
 
-Testability: services and stores are independently testable.
+Core: singletons (API client, theme), interceptors, platform concerns.
 
-Scalability: adding features means cloning a proven pattern.
+Shared: reusable UI atoms, DTOs, pipes, utilities.
 
-🧩 Technology Choices & Rationale
-Angular 20 (Standalone + SSR)
+Feature: self-contained vertical slices: pages/components/store/services.
 
-Standalone components simplify module overhead and improve tree-shaking.
+This layout scales: add a feature by cloning a proven pattern (service → store → UI).
 
-SSR improves first meaningful paint & SEO. We carefully guarded browser-only APIs with isPlatformBrowser and DI for DOCUMENT.
+Why These Technologies?
 
-Material 3 (MDC) Theming
+Angular 20 + Standalone: fewer NgModules, better tree-shaking, simpler mental model.
 
-M3 tokens and palettes (light/dark) provide accessibility-compliant colors.
+SSR: faster first paint, SEO-friendly; guarded browser APIs (isPlatformBrowser) to prevent SSR crashes.
 
-Class-scoped color layers allow runtime theme switching (e.g., theme-ink, theme-sunset) without recompiling styles.
+Material 3 (MDC): accessible color system, consistent components, and tokens for density/shape/typography.
 
-Global tokens (--app-surface, --app-border, --app-radius) keep a consistent visual language across cards, panels, paginators.
+NgRx Signals Store: deterministic state without classic NgRx boilerplate; perfect fit for medium-size apps.
 
-NgRx Signals Store
+Reactive Forms: robust validation, server error mapping (422) into controls, great UX for forms.
 
-Minimal boilerplate, fully typed, predictable state via withState + withMethods.
+Markdown: marked + Angular sanitizer via [innerHTML] for safe, SSR-friendly content.
 
-Explicit side-effects in stores: loadPage, loadOne, createOne, updateOne, deleteOne.
+State Management
 
-Signals provide fine-grained reactivity and work perfectly with OnPush.
+Signals Store (@ngrx/signals): withState for shape, withMethods for side-effects.
 
-Reactive Forms + Server Error Mapping
+Stores orchestrate API calls, handle loading/error flags, and update state slices.
 
-Complex validation UX needs Reactive Forms (sync rules and server 422 mapping).
-
-A small utility maps server errors into form controls and a global form error—clean and reusable.
-
-Markdown Rendering
-
-marked + Angular sanitizer via [innerHTML] for safe, SSR-friendly content rendering.
-
-Typography .prose styles keep headings, lists, code blocks compact and legible.
+Components consume signals directly; no manual subscriptions or teardown.
 
 Performance
 
-Lazy loaded routes with loadComponent.
+Lazy-loaded routes with loadComponent.
 
-ChangeDetectionStrategy.OnPush across pages/components.
+OnPush change detection across feature pages/components.
 
-Angular 20 control-flow (@if, @for) + track by slug / id.
+Angular 20 control flow (@if, @for) with track keys (slug/id).
 
-SSR-safe theme & localStorage initialization.
+SSR-safe theme/localStorage initialization (no top-level document access).
 
-Tooling & DX
+UX / UI
 
-Vitest for fast unit tests (services/components).
+Material 3 theming (light/dark); runtime theme switcher via CSS class scopes.
 
-ESLint + Prettier for consistent style.
+Global tokens: --app-surface, --app-border, --app-radius for cohesive visuals.
 
-Husky pre-push to prevent shipping broken tests.
+Posts List: responsive grid + outlined paginator; hover elevation on cards.
 
-🧪 Testing Strategy (Snapshot)
+Post Detail: Markdown .prose typography, cover image derived from slug.
 
-Unit
+Editor: Reactive Forms, inline validation, server-error mapping, progress bar while submitting, snackbar feedback.
 
-ArticleService with HttpClientTestingModule (happy path & error cases).
+Comments Thread: clean list, add/delete (when authenticated), independent store.
 
-PostEditorComponent minimal validation spec.
+Testing
 
-Stores can be tested by mocking services and asserting state transitions.
+Service tests with HttpClientTestingModule (e.g., paging, error cases).
 
-Why Vitest?
+Component tests for validation (e.g., Editor).
 
-Lightweight, modern, and fast—great feedback loop for component/service tests.
+Run:
 
-🖌️ UX / UI
+npm test
+npm run test:ci
 
-Material 3 components themed with soft surfaces and subtle elevation.
+Developer Experience
 
-Responsive grid for cards (mobile → 1 col, tablet → 2, desktop → 3).
+ESLint + Prettier for consistency.
 
-Polished paginator (outlined container), cards hover elevation.
+Husky pre-push runs tests in CI mode to keep main green.
 
-Dark mode done right: foreground colors, surfaces, and borders all switch; inputs do not double-border (Tailwind/Material adjustments included).
+Tailwind compatibility fixes for MDC outlined inputs (prevent “double border”).
 
-Post detail:
+Theming via material-theme.scss and @use (M3 API), referenced in styles.scss.
 
-Markdown content with .prose typography
+Design Decisions (ADRs)
 
-Placeholder cover image derived from slug
+Signals over Classic NgRx: App size does not justify actions/reducers boilerplate. Signals keep state explicit and ergonomic while staying scalable.
 
-Author meta & creation date
+SSR-first: For SEO/perceived performance; all browser-only APIs are guarded (theme initialization happens only in browser).
 
-Editor:
+Class-scoped color layers: Enables runtime brand/dark switching without rebuilding styles.
 
-Reactive form (title/description/body/tags)
+Service ↔ Store ↔ UI: Single responsibility per layer; easier testing and maintenance.
 
-Field-level messages (required/minlength) + server errors
+Reactive Forms + Server Mapping: Strong UX for forms and predictable error presentation.
 
-Progress bar while submitting; snackbar feedback
+Challenge Checklist
 
-Delete confirmation via MatDialog
+ Angular (>=15) with modular, scalable architecture (Core/Shared/Feature)
 
-🔐 Comments (Clean & Modular)
+ Clean Code & Separation of Concerns (Service/Store/UI)
 
-CommentsService (HTTP boundary only)
+ State Management with Signals / NgRx Signals
 
-CommentsStore (signal store: load, add, remove)
+ Performance: Lazy Loading, OnPush, @for track keys
 
-CommentsThreadComponent (UI + reactive form)
+ UX/UI: Material 3, responsive design, dark/light themes
 
-Props: slug, canPost, allowDelete so it’s reusable in any page.
+ Post Management: create/edit/delete with Reactive Forms + validation + server errors
 
-🛠️ Setup & Runbook
-Environment
+ Comments thread display (+ add/delete when authenticated)
 
-The API base URL is configured inside ApiService:
+ Unit tests: at least one Service and one Component
 
-private readonly baseUrl = 'https://api.realworld.show/api'; // or realworld.build
+ Documentation: this README explains architecture & tech choices
 
+License
 
-Switch here if your reviewer asks for a different RealWorld host.
+MIT — use freely, attribution appreciated.
 
-ThemING & Tailwind Compatibility
-
-styles.scss imports material-theme.scss via @use './material-theme';.
-
-Tailwind preflight can add borders to inputs; this repo includes MDC outline overrides to avoid double borders.
-
-Theme toggling is SSR-safe (no document/localStorage at top-level).
-
-Husky on Windows
-
-If you ever see husky.sh: No such file or directory, recreate hooks:
-
-npm run prepare
-# then write .husky/pre-push with LF line endings and:
-# . "$(dirname "$0")/_/husky.sh"
-
-🧱 Architectural Decisions (Short ADRs)
-
-Signals over Classic NgRx
-Scope and complexity didn’t justify actions/reducers/effects boilerplate. Signals Store provides determinism and ergonomics while keeping growth paths open.
-
-SSR First
-For perceived performance and SEO, but guarded browser APIs with isPlatformBrowser to prevent SSR crashes. Theming/LS initialization happen only in the browser.
-
-M3 Theming via Sass API
-Consistent tokens/density and class-scoped color layers enable runtime theme changes (brand variants) without rebuilding.
-
-Service ↔ Store ↔ UI Separation
-Each layer has a single responsibility. Stores own orchestration; services own transport; components render and handle user interaction.
-
-📦 Scripts
-{
-  "start": "ng serve",                 // dev SSR
-  "serve:ssr": "ng serve --ssr",
-  "build": "ng build",
-  "build:ssr": "ng build && ng run blog-platform:server",
-  "test": "vitest",
-  "test:ci": "vitest run --coverage",
-  "lint": "ng lint",
-  "format": "prettier --write \"**/*.{ts,js,html,scss,md,json}\""
-}
-
-✅ What’s Implemented (Challenge Checklist)
-
- Posts list with pagination, responsive grid
-
- Post detail with Markdown rendering + cover
-
- Create/Edit/Delete posts (Reactive Forms + validation + server errors)
-
- Comments thread (read/add/delete when auth present)
-
- NgRx Signals Store for posts & comments
-
- Material 3 theming (light/dark) + runtime switcher (SSR-safe)
-
- SSR, lazy routes, OnPush, @for with track
-
- Unit tests (service + component)
-
- Husky pre-push safety, ESLint, Prettier
-
-🤝 Contributing
-
-PRs welcome—please run npm run lint and npm run test locally before pushing.
-Keep layers clean (Service ↔ Store ↔ UI) and prefer Signals & standalone components for new features.
-
-📄 License
-
-MIT — Use freely, attribute appreciated.
-
-If you’re reviewing this as a hiring manager: this codebase reflects how I structure real, maintainable Angular apps—clean architecture, strong developer experience, and a delightful UI that’s accessible and fast.
+::contentReference[oaicite:0]{index=0}
