@@ -27,8 +27,8 @@
               }
             ],
             "styles": [
-              "src/tailwind.css",
-              "src/styles.scss"
+              "src/styles.scss",
+              "src/tailwind.css"
             ],
             "server": "src/main.server.ts",
             "outputMode": "server",
@@ -88,8 +88,8 @@
               }
             ],
             "styles": [
-              "src/tailwind.css",
-              "src/styles.scss"
+              "src/styles.scss",
+              "src/tailwind.css"
             ]
           }
         },

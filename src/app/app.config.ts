@@ -18,7 +18,7 @@ export const appConfig: ApplicationConfig = {
     provideClientHydration(withEventReplay()),
     provideServiceWorker('ngsw-worker.js', {
       enabled: !isDevMode(),
-      registrationStrategy: 'registerWhenStable:30000',
+      registrationStrategy: 'registerImmediately',
     }),
     provideHttpClient(
       withFetch(),
@@ -26,6 +26,9 @@ export const appConfig: ApplicationConfig = {
       //   AuthTokenInterceptor,
       //   HttpErrorInterceptor,
       // ]),
-    ),
+    ), provideServiceWorker('ngsw-worker.js', {
+            enabled: !isDevMode(),
+            registrationStrategy: 'registerWhenStable:30000'
+          }),
   ],
 };
