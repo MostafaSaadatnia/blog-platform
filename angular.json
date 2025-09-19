@@ -57,6 +57,14 @@
               "optimization": false,
               "extractLicenses": false,
               "sourceMap": true
+            },
+            "pages": {
+              "outputMode": "browser",
+              "baseHref": "/blog-platform/",
+              "serviceWorker": false,
+              "optimization": true,
+              "extractLicenses": true,
+              "sourceMap": false
             }
           },
           "defaultConfiguration": "production"
@@ -69,6 +77,14 @@
             },
             "development": {
               "buildTarget": "blog-platform:build:development"
+            },
+            "pages": {
+              "outputMode": "browser",
+              "baseHref": "/blog-platform/",
+              "serviceWorker": false,
+              "optimization": true,
+              "extractLicenses": true,
+              "sourceMap": false
             }
           },
           "defaultConfiguration": "development"
