@@ -5,12 +5,14 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { PostsStore } from '../../store/posts.store';
-
+import { MarkdownPipe } from '@shared/pipes/markdown.pipe';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmDialogComponent } from '@shared/components/confirm-dialog/confirm-dialog';
 
 @Component({
   selector: 'app-post-detail',
   standalone: true,
-  imports: [CommonModule, RouterModule, MatButtonModule, MatIconModule, MatCardModule],
+  imports: [CommonModule, RouterModule, MatButtonModule, MatIconModule, MatCardModule, MarkdownPipe],
   changeDetection: ChangeDetectionStrategy.OnPush,
   styles: [`
     .container { max-width: 900px; margin-inline: auto; padding: 1rem; }
@@ -44,7 +46,7 @@ import { PostsStore } from '../../store/posts.store';
         </div>
 
         <mat-card class="panel">
-          <div class="body">{{ c.body || c.description }}</div>
+          <div class="prose" [innerHTML]="(c.body || c.description) | markdown"></div>
         </mat-card>
       } @else {
         <div class="panel">Loading…</div>
@@ -54,6 +56,7 @@ import { PostsStore } from '../../store/posts.store';
 })
 export class PostDetailComponent {
   readonly store = inject(PostsStore);
+  private dialog = inject(MatDialog);
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
 
@@ -62,8 +65,9 @@ export class PostDetailComponent {
     if (slug) this.store.loadOne(slug);
   }
 
-  onDelete(slug: string) {
-    if (!confirm('Delete this post?')) return;
+  async onDelete(slug: string) {
+    const ok = await this.dialog.open(ConfirmDialogComponent).afterClosed().toPromise();
+    if (!ok) return;
     this.store.deleteOne(slug);
     this.router.navigate(['/posts']);
   }

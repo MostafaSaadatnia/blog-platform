@@ -28,7 +28,9 @@ export const PostsStore = signalStore(
     function loadPage(page = store.page(), pageSize = store.pageSize()) {
       patchState(store, { page, pageSize, loading: true, error: null });
       api.getArticles(page, pageSize).subscribe({
-        next: (res) => patchState(store, { articles: res.articles, total: res.articlesCount, loading: false }),
+        next: (res) => patchState(store, {
+          articles: res.articles, total: res.articlesCount, loading: false
+        }),
         error: (err: Error) => patchState(store, { loading: false, error: err?.message ?? 'Load failed' }),
       });
     }
@@ -45,35 +47,50 @@ export const PostsStore = signalStore(
       patchState(store, { loading: true, error: null });
       api.deleteArticle(slug).subscribe({
         next: () => {
-          const filtered = store.articles().filter(x => x.slug !== slug);
-          patchState(store, { articles: filtered, current: null, loading: false, total: Math.max(0, store.total() - 1) });
+          const list = store.articles().filter(x => x.slug !== slug);
+          patchState(store, { articles: list, total: Math.max(0, store.total() - 1), current: null, loading: false });
           if (refresh) loadPage(store.page(), store.pageSize());
         },
         error: (err: Error) => patchState(store, { loading: false, error: err?.message ?? 'Delete failed' }),
       });
     }
 
-    function createOne(payload: Partial<ArticleDto>, navigate?: (slug: string) => void) {
+    function createOne(
+      payload: Partial<ArticleDto>,
+      onDone?: (slug: string) => void,
+      onError?: (err: unknown) => void
+    ) {
       patchState(store, { loading: true, error: null });
       api.createArticle(payload).subscribe({
         next: (a) => {
-          patchState(store, { loading: false, current: a });
-          if (navigate) navigate(a.slug);
+          patchState(store, { current: a, loading: false });
+          onDone?.(a.slug);
           loadPage(1, store.pageSize());
         },
-        error: (err: Error) => patchState(store, { loading: false, error: err?.message ?? 'Create failed' }),
+        error: (err) => {
+          patchState(store, { loading: false, error: (err as any)?.message ?? 'Create failed' });
+          onError?.(err);
+        }
       });
     }
 
-    function updateOne(slug: string, patch: Partial<ArticleDto>, navigate?: (slug: string) => void) {
+    function updateOne(
+      slug: string,
+      patch: Partial<ArticleDto>,
+      onDone?: (slug: string) => void,
+      onError?: (err: unknown) => void
+    ) {
       patchState(store, { loading: true, error: null });
       api.updateArticle(slug, patch).subscribe({
         next: (a) => {
           const updated = store.articles().map(x => x.slug === slug ? a : x);
           patchState(store, { articles: updated, current: a, loading: false });
-          if (navigate) navigate(a.slug);
+          onDone?.(a.slug);
         },
-        error: (err: Error) => patchState(store, { loading: false, error: err?.message ?? 'Update failed' }),
+        error: (err) => {
+          patchState(store, { loading: false, error: (err as Error)?.message ?? 'Update failed' });
+          onError?.(err);
+        }
       });
     }
 

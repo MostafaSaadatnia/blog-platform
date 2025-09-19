@@ -1,20 +1,20 @@
-// @use 'material-theme';
+@use "./material-theme";
 
 :root {
-  --app-radius: 16px;
+  --app-radius: 14px;
   --app-border: 1px solid rgba(0, 0, 0, 0.08);
-  --app-border-strong: 1px solid rgba(0, 0, 0, 0.12);
+  --app-border-strong: 1px solid rgba(0, 0, 0, 0.14);
   --app-surface: #fff;
-  --app-surface-alt: #f7f7f8;
+  --app-surface-alt: #f6f7f9;
 }
 .dark-theme {
-  --app-border: 1px solid rgba(255, 255, 255, 0.12);
-  --app-border-strong: 1px solid rgba(255, 255, 255, 0.18);
-  --app-surface: #121316;
-  --app-surface-alt: #1a1c20;
+  --app-surface: #121316;      /* card surface (already in your code) */
+  --app-surface-alt: #191b1f;  /* panel surface (already in your code) */
+  background-color: #191b1f;   /* new: dark background for page */
+  color: #e0e0e0;              /* new: light text color for dark mode */
 }
 
-/* Reusable surfaces */
+/* Surfaces */
 .surface-card {
   background: var(--app-surface);
   border: var(--app-border);
@@ -30,21 +30,22 @@
 .app-container {
   max-width: 1200px;
   margin-inline: auto;
-  padding: 1rem;
+  padding: 16px;
 }
 .app-toolbar {
   position: sticky;
   top: 0;
   z-index: 10;
   border-bottom: var(--app-border);
+  backdrop-filter: saturate(120%) blur(6px);
 }
 .app-main {
-  padding-block: 1rem 2rem;
+  padding-block: 16px 32px;
 }
 
-/* Material tweaks */
-.mdc-card,
-.mat-mdc-card {
+/* Subtle component polish */
+.mat-mdc-card,
+.mdc-card {
   border-radius: var(--app-radius);
 }
 .mat-mdc-paginator {
@@ -56,82 +57,121 @@
   padding-inline: 12px !important;
 }
 
-
-
-
-
-
-/* ========= Mat MDC Outlined Text Field – Safe Overrides ========= */
-.mdc-text-field,
+/* Fix double borders inside Angular Material form fields */
 .mdc-text-field__input,
-.mat-mdc-form-field,
-.mat-mdc-form-field-infix {
-  border: none !important;
+.mat-mdc-input-element,
+.mat-mdc-chip-input {
+  border: 0 !important;
+  background: transparent !important;
   box-shadow: none !important;
+  outline: none !important;
+}
+
+/* Keep outline shape crisp */
+.mdc-text-field--outlined {
+  border-radius: var(--app-radius);
+}
+.mdc-notched-outline__leading,
+.mdc-notched-outline__notch,
+.mdc-notched-outline__trailing {
+  border-color: inherit; /* uses themed color */
+}
+
+/* Textarea polish */
+textarea.mat-mdc-input-element {
+  resize: vertical;
+}
+
+/* Chip grid input aligns with Material */
+.mat-mdc-chip-grid .mat-mdc-input-element {
+  padding-top: 8px;
+  padding-bottom: 8px;
 }
 
 
+
+.mdc-notched-outline__notch
+{
+  border-right: none !important;  /* Remove any border (style, width) set by Tailwind */
+}
+
+.mdc-text-field--focused .mdc-notched-outline__leading,
+.mdc-text-field--focused .mdc-notched-outline__notch,
+.mdc-text-field--focused .mdc-notched-outline__trailing {
+  border-right: none!important;
+}
+
+/* Ensure outline border uses the theme's border color */
 .mdc-text-field--outlined .mdc-notched-outline__leading,
 .mdc-text-field--outlined .mdc-notched-outline__notch,
-.mdc-text-field--outlined .mdc-notched-outline__trailing,
-.mdc-text-field--outlined .mat-mdc-notch-piece {
-  border-style: solid !important;
-  border-width: 1px !important;
-}
-
-
-.mat-mdc-form-field.mdc-text-field--outlined {
-
-  --mdc-outlined-text-field-outline-color: rgba(0, 0, 0, 0.38);
-
-  --mdc-outlined-text-field-hover-outline-color: rgba(0, 0, 0, 0.60);
-
-  --mdc-outlined-text-field-focus-outline-color: #3f51b5;
-
-  --mdc-outlined-text-field-disabled-outline-color: rgba(0, 0, 0, 0.12);
-}
-
-
-.mdc-text-field--outlined .mdc-notched-outline__leading,
 .mdc-text-field--outlined .mdc-notched-outline__trailing {
-  border-color: var(--mdc-outlined-text-field-outline-color) !important;
+  border-color: var(--app-border-color) !important;
+  /* If Tailwind set border-style, we keep it solid but unify color */
+  /* Optionally, set border-width: 1px here for consistency */
 }
-.mdc-text-field--outlined:hover .mdc-notched-outline__leading,
-.mdc-text-field--outlined:hover .mdc-notched-outline__trailing {
-  border-color: var(--mdc-outlined-text-field-hover-outline-color) !important;
+
+.mdc-notched-outline__leading,
+.mdc-notched-outline__notch,
+.mdc-notched-outline__trailing {
+  border-width: 1px;
 }
-.mdc-text-field--outlined.mdc-text-field--focused .mdc-notched-outline__leading,
-.mdc-text-field--outlined.mdc-text-field--focused .mdc-notched-outline__trailing {
-  border-color: var(--mdc-outlined-text-field-focus-outline-color) !important;
-}
-.mdc-text-field--disabled.mdc-text-field--outlined .mdc-notched-outline__leading,
-.mdc-text-field--disabled.mdc-text-field--outlined .mdc-notched-outline__trailing {
-  border-color: var(--mdc-outlined-text-field-disabled-outline-color) !important;
+.mdc-text-field--focused .mdc-notched-outline__leading,
+.mdc-text-field--focused .mdc-notched-outline__notch,
+.mdc-text-field--focused .mdc-notched-outline__trailing {
+  border-width: 2px;
 }
 
 
-.mdc-text-field--outlined .mdc-notched-outline__notch {
-  border-color: var(--mdc-outlined-text-field-outline-color) !important;
-}
-.mdc-text-field--outlined:hover .mdc-notched-outline__notch {
-  border-color: var(--mdc-outlined-text-field-hover-outline-color) !important;
-}
-.mdc-text-field--outlined.mdc-text-field--focused .mdc-notched-outline__notch {
-  border-color: var(--mdc-outlined-text-field-focus-outline-color) !important;
-}
-.mdc-text-field--disabled.mdc-text-field--outlined .mdc-notched-outline__notch {
-  border-color: var(--mdc-outlined-text-field-disabled-outline-color) !important;
-}
 
 
-.mdc-text-field--invalid.mdc-text-field--outlined .mdc-notched-outline__leading,
-.mdc-text-field--invalid.mdc-text-field--outlined .mdc-notched-outline__notch,
-.mdc-text-field--invalid.mdc-text-field--outlined .mdc-notched-outline__trailing {
-  border-color: #f44336 !important; 
+/* Prose style for markdown */
+.prose {
+  line-height: 1.7;
+  color: inherit;
+}
+.prose h1, .prose h2, .prose h3 {
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  margin: 1.2em 0 .6em;
+}
+.prose h1 { font-size: 1.75rem; }
+.prose h2 { font-size: 1.35rem; }
+.prose h3 { font-size: 1.15rem; }
+
+.prose p, .prose ul, .prose ol, .prose blockquote, .prose pre {
+  margin: .75rem 0;
+}
+.prose ul { padding-left: 1.25rem; list-style: disc; }
+.prose ol { padding-left: 1.25rem; list-style: decimal; }
+
+.prose blockquote {
+  padding: .5rem .75rem;
+  border-left: 4px solid currentColor;
+  opacity: .8;
+}
+.prose code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size: .92em;
+  background: color-mix(in srgb, currentColor 8%, transparent);
+  padding: .1rem .35rem;
+  border-radius: .35rem;
+}
+.prose pre {
+  background: color-mix(in srgb, currentColor 8%, transparent);
+  padding: .75rem;
+  border-radius: .5rem;
+  overflow: auto;
+}
+.prose img, .prose video {
+  max-width: 100%;
+  height: auto;
+  border-radius: .5rem;
+  display: block;
+  margin: .75rem 0;
 }
 
-
-.mdc-text-field__input {
-  background: transparent; 
-  outline: none;
+.dark-theme .prose blockquote,
+.dark-theme .prose pre,
+.dark-theme .prose code {
+  background: color-mix(in srgb, white 6%, transparent);
 }

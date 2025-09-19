@@ -12,6 +12,13 @@ import { ArticleDto } from '@/shared/models/article.model';
   imports: [CommonModule, RouterLink, MatCardModule, MatChipsModule, MatIconModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
   styles: [`
+  /* cards */
+.card-elevate { border: var(--app-border); border-radius: var(--app-radius); transition: box-shadow .2s, border-color .2s, transform .06s; }
+.card-elevate:hover { transform: translateY(-1px); border: var(--app-border-strong); box-shadow: var(--mat-elevation-level4); }
+
+/* paginator wrapper */
+.pager-outlined { border: var(--app-border); border-radius: var(--app-radius); padding: 2px; background: var(--app-surface); }
+
     .card { border-radius: var(--app-radius); border: var(--app-border); transition: box-shadow .2s ease, transform .08s ease, border-color .2s; background: var(--app-surface); }
     .card:hover { box-shadow: var(--mat-elevation-level4); transform: translateY(-1px); border: var(--app-border-strong); }
     .title { font-size: 1rem; font-weight: 600; line-height: 1.35; margin: 0; }
