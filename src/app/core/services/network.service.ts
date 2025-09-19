@@ -7,7 +7,7 @@ export class NetworkService {
   private isBrowser = isPlatformBrowser(this.platformId);
 
   private onlineSig = signal<boolean>(this.isBrowser ? navigator.onLine : true);
-  /** readonly signal for templates/components */
+
   online = this.onlineSig.asReadonly();
 
   constructor() {

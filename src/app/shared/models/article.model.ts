@@ -8,13 +8,11 @@ export interface ArticleDto {
   slug: string;
   title: string;
   description: string;
-  body: string;
+  body?: string;
   tagList: string[];
   createdAt: string;
   updatedAt: string;
-  favorited: boolean;
-  favoritesCount: number;
-  author: AuthorDto;
+  author: { username: string };
 }
 
 export interface ArticlesResponse {

@@ -8,21 +8,18 @@ describe('PostCardComponent', () => {
     title: 'Hello World',
     description: 'Desc',
     body: 'Body',
-    tagList: ['hello', 'world'],
+    tagList: ['a', 'b'],
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString(),
     favorited: false,
-    favoritesCount: 3,
-    author: { username: 'mo', following: false, image: '' }
+    favoritesCount: 2,
+    author: { username: 'mo', following: false, image: '' },
   };
 
   it('renders title and tags', async () => {
-    await render(PostCardComponent, {
-      componentInputs: { article }
-    });
-
+    await render(PostCardComponent, { componentInputs: { article } });
     expect(screen.getByText('Hello World')).toBeInTheDocument();
-    expect(screen.getByText('hello')).toBeInTheDocument();
-    expect(screen.getByText('world')).toBeInTheDocument();
+    expect(screen.getByText('a')).toBeInTheDocument();
+    expect(screen.getByText('b')).toBeInTheDocument();
   });
 });
