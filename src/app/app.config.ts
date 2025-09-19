@@ -4,8 +4,8 @@ import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
 import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
 import { provideServiceWorker } from '@angular/service-worker';
-import { provideHttpClient, withFetch } from '@angular/common/http';
-
+import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
+// TODO: USE IT WHEN THE REAL SERVER BE READY...
 // import { AuthTokenInterceptor } from '@core/interceptors/auth-token.interceptor';
 // import { HttpErrorInterceptor } from '@core/interceptors/http-error.interceptor';
 
@@ -22,13 +22,14 @@ export const appConfig: ApplicationConfig = {
     }),
     provideHttpClient(
       withFetch(),
-      // withInterceptors([
-      //   AuthTokenInterceptor,
-      //   HttpErrorInterceptor,
-      // ]),
+      withInterceptors([
+        // TODO: USE IT WHEN THE REAL SERVER BE READY...
+        // AuthTokenInterceptor,
+        // HttpErrorInterceptor,
+      ]),
     ), provideServiceWorker('ngsw-worker.js', {
-            enabled: !isDevMode(),
-            registrationStrategy: 'registerWhenStable:30000'
-          }),
+      enabled: !isDevMode(),
+      registrationStrategy: 'registerWhenStable:30000'
+    }),
   ],
 };

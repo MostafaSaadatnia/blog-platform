@@ -11,3 +11,17 @@ export interface CommentDto {
 export interface CommentsResponse {
   comments: CommentDto[];
 }
+
+
+export interface ProfileDto {
+  username: string;
+  image?: string | null;
+}
+
+export interface CommentsResponse {
+  comments: CommentDto[];
+}
+
+export interface CommentEnvelope {
+  comment: CommentDto;
+}
