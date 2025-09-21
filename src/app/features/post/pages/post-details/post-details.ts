@@ -19,7 +19,7 @@ import { CommentsThreadComponent } from '@features/post/components/comments-thre
     .container { max-width: 900px; margin-inline: auto; padding: 1rem; }
     .header { display:flex; align-items:center; justify-content:space-between; gap:.75rem; margin-bottom:1rem; }
     .title { font-size:1.75rem; font-weight:700; letter-spacing:-.01em; margin:0; }
-    .meta { opacity:.7; font-size:.85rem; display:flex; gap:.5rem; align-items:center; }
+    .meta { opacity:.7; font-size:.85rem; display:flex; gap:.5rem; align-items:center;margin: 1rem 0.5rem; }
     .body { white-space: pre-line; line-height:1.7; font-size:1.02rem; }
     .panel { padding: 1rem; border-radius: var(--app-radius); border: var(--app-border); background: var(--app-surface); }
     .actions { display:flex; gap:.5rem; }

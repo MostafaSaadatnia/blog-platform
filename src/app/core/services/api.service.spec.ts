@@ -22,7 +22,7 @@ describe('ApiService', () => {
   afterEach(() => httpMock.verify());
 
   it('GET /articles with limit/offset', () => {
-    api.get<any>('/articles', { limit: 10, offset: 0 }).subscribe((res) => {
+    api.get<>('/articles', { limit: 10, offset: 0 }).subscribe((res) => {
       expect(res.ok).toBe(true);
     });
 

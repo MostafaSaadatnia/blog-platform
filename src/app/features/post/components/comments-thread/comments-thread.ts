@@ -26,7 +26,7 @@ import { CommentsStore } from '@features/post/store/comments.store';
     .editor { border: var(--app-border); border-radius: var(--app-radius); background: var(--app-surface); padding: 12px; }
     .list { display: grid; gap: 8px; }
     .item { border: var(--app-border); border-radius: var(--app-radius); background: var(--app-surface); padding: 12px; }
-    .meta { font-size: .8rem; opacity: .75; display:flex; gap:.5rem; align-items:center; }
+    .meta { font-size: .8rem; opacity: .75; display:flex; gap:.5rem; align-items:center;margin: 1rem 0.5rem; }
     .author { font-weight: 600; }
     .body { white-space: pre-line; margin-top: .35rem; line-height: 1.6; }
     .row { display:flex; align-items:center; gap:.5rem; justify-content: space-between; }
