@@ -119,7 +119,7 @@ describe('PostsStore', () => {
     store.updateOne('a2', { title: 'A2x' }, onDone);
     expect(store.loading()).toBe(false);
     expect(store.error()).toBeNull();
-    expect(store.articles().find(x => x.slug === 'a2')!.title).toBe('A2x');
+    expect(store.articles().find((x) => x.slug === 'a2')!.title).toBe('A2x');
     expect(store.current()!.title).toBe('A2x');
     expect(onDone).toHaveBeenCalledWith('a2');
   });
@@ -145,7 +145,7 @@ describe('PostsStore', () => {
     expect(store.loading()).toBe(false);
     expect(store.error()).toBeNull();
     expect(store.current()).toBeNull();
-    expect(store.articles().some(x => x.slug === 'a2')).toBe(false);
+    expect(store.articles().some((x) => x.slug === 'a2')).toBe(false);
     expect(store.total()).toBe(1);
     expect(api.getArticles).toHaveBeenCalled();
   });

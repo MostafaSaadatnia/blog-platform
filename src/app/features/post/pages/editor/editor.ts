@@ -11,35 +11,87 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { PostsStore } from '../../store/posts.store';
-import { applyServerErrors } from '@/shared/utils/form-errors.util';
-
+import { PostsStore } from '@features/post/store/posts.store';
+import { applyServerErrors } from '@shared/utils/form-errors.util';
 
 @Component({
   selector: 'app-post-editor',
   standalone: true,
   imports: [
-    CommonModule, RouterModule, ReactiveFormsModule,
-    MatFormFieldModule, MatInputModule, MatChipsModule,
-    MatButtonModule, MatIconModule, MatSnackBarModule, MatProgressBarModule
+    CommonModule,
+    RouterModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatChipsModule,
+    MatButtonModule,
+    MatIconModule,
+    MatSnackBarModule,
+    MatProgressBarModule,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  styles: [`
-    .container { max-width: 900px; margin-inline: auto; padding: 16px; }
-    .bar { position: sticky; top: calc(64px + 0px); z-index: 2; background: var(--app-surface);
-      border: var(--app-border); border-radius: var(--app-radius); padding: 12px; display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:12px; }
-    .title { font-size: 1.1rem; font-weight: 700; margin: 0; }
-    .panel { padding: 16px; border-radius: var(--app-radius); border: var(--app-border); background: var(--app-surface); display:grid; gap:16px; }
-    .actions { display:flex; gap:8px; justify-content:flex-end; }
-    .server-errors { border: var(--app-border); border-left: 4px solid var(--mdc-theme-error, #d32f2f); border-radius: var(--app-radius); padding: 12px; background: color-mix(in srgb, currentColor 8%, transparent); }
-  `],
+  styles: [
+    `
+      .container {
+        max-width: 900px;
+        margin-inline: auto;
+        padding: 16px;
+      }
+      .bar {
+        position: sticky;
+        top: calc(64px + 0px);
+        z-index: 2;
+        background: var(--app-surface);
+        border: var(--app-border);
+        border-radius: var(--app-radius);
+        padding: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        margin-bottom: 12px;
+      }
+      .title {
+        font-size: 1.1rem;
+        font-weight: 700;
+        margin: 0;
+      }
+      .panel {
+        padding: 16px;
+        border-radius: var(--app-radius);
+        border: var(--app-border);
+        background: var(--app-surface);
+        display: grid;
+        gap: 16px;
+      }
+      .actions {
+        display: flex;
+        gap: 8px;
+        justify-content: flex-end;
+      }
+      .server-errors {
+        border: var(--app-border);
+        border-left: 4px solid var(--mdc-theme-error, #d32f2f);
+        border-radius: var(--app-radius);
+        padding: 12px;
+        background: color-mix(in srgb, currentColor 8%, transparent);
+      }
+    `,
+  ],
   template: `
     <section class="container">
       <div class="bar">
         <h1 class="title">{{ editing() ? 'Edit Post' : 'New Post' }}</h1>
         <div class="actions">
           <a mat-button routerLink="/posts">Back</a>
-          <button mat-flat-button color="primary" (click)="submit()" [disabled]="form.invalid || store.loading()">Save</button>
+          <button
+            mat-flat-button
+            color="primary"
+            (click)="submit()"
+            [disabled]="form.invalid || store.loading()"
+          >
+            Save
+          </button>
         </div>
       </div>
 
@@ -84,7 +136,6 @@ import { applyServerErrors } from '@/shared/utils/form-errors.util';
           }
         </mat-form-field>
 
-        <!-- Tags -->
         <div>
           <mat-chip-grid #chipGrid aria-label="Tags">
             @for (t of tags(); track t) {
@@ -104,19 +155,25 @@ import { applyServerErrors } from '@/shared/utils/form-errors.util';
               [matChipInputFor]="chipGrid"
               [matChipInputSeparatorKeyCodes]="separatorKeys"
               (matChipInputTokenEnd)="addTag($event)"
-              placeholder="Type a tag and press Enter" />
+              placeholder="Type a tag and press Enter"
+            />
           </mat-form-field>
         </div>
 
         <div class="actions">
           <button mat-stroked-button type="button" routerLink="/posts">Cancel</button>
-          <button mat-flat-button color="primary" type="submit" [disabled]="form.invalid || store.loading()">
+          <button
+            mat-flat-button
+            color="primary"
+            type="submit"
+            [disabled]="form.invalid || store.loading()"
+          >
             {{ editing() ? 'Save changes' : 'Publish' }}
           </button>
         </div>
       </form>
     </section>
-  `
+  `,
 })
 export class PostEditorComponent {
   readonly store = inject(PostsStore) as InstanceType<typeof PostsStore>;
@@ -146,11 +203,14 @@ export class PostEditorComponent {
     effect(() => {
       const a = this.store.current();
       if (a && this.editing()) {
-        this.form.patchValue({
-          title: a.title,
-          description: a.description,
-          body: a.body ?? '',
-        }, { emitEvent: false });
+        this.form.patchValue(
+          {
+            title: a.title,
+            description: a.description,
+            body: a.body ?? '',
+          },
+          { emitEvent: false },
+        );
         this.tags.set((a.tagList ?? []).slice());
       }
     });
@@ -161,10 +221,15 @@ export class PostEditorComponent {
     if (value && !this.tags().includes(value)) this.tags.set([...this.tags(), value]);
     e.chipInput?.clear();
   }
-  removeTag(tag: string) { this.tags.set(this.tags().filter(t => t !== tag)); }
+  removeTag(tag: string) {
+    this.tags.set(this.tags().filter((t) => t !== tag));
+  }
 
   submit() {
-    if (this.form.invalid) { this.form.markAllAsTouched(); return; }
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      return;
+    }
 
     this.form.setErrors(null);
     for (const key of Object.keys(this.form.controls)) {
@@ -189,14 +254,23 @@ export class PostEditorComponent {
 
     if (this.editing()) {
       const currentSlug = this.slug()!;
-      this.store.updateOne(currentSlug, payload,
-        (slug) => { this.snack.open('Post updated', 'OK', { duration: 2000 }); this.router.navigate(['/posts', slug]); },
-        onError
+      this.store.updateOne(
+        currentSlug,
+        payload,
+        (slug) => {
+          this.snack.open('Post updated', 'OK', { duration: 2000 });
+          this.router.navigate(['/posts', slug]);
+        },
+        onError,
       );
     } else {
-      this.store.createOne(payload,
-        (slug) => { this.snack.open('Post created', 'OK', { duration: 2000 }); this.router.navigate(['/posts', slug]); },
-        onError
+      this.store.createOne(
+        payload,
+        (slug) => {
+          this.snack.open('Post created', 'OK', { duration: 2000 });
+          this.router.navigate(['/posts', slug]);
+        },
+        onError,
       );
     }
   }

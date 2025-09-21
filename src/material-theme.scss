@@ -1,27 +1,36 @@
 @use '@angular/material' as mat;
 
 /* Light theme (tokens + component styles) */
-$light: mat.define-theme((
-  color: (
-    theme-type: light,
-    primary:  mat.$azure-palette,
-    tertiary: mat.$spring-green-palette,
-  ),
-  density: ( scale: 0 ), // <-- IMPORTANT: object, not a number
-));
+$light: mat.define-theme(
+  (
+    color: (
+      theme-type: light,
+      primary: mat.$azure-palette,
+      tertiary: mat.$spring-green-palette,
+    ),
+    density: (
+      scale: 0,
+    ),
+    // <-- IMPORTANT: object, not a number
+  )
+);
 
 @include mat.core-theme($light);
 @include mat.all-component-themes($light);
 
 /* Dark colors layer (scoped) */
 .dark-theme {
-  $dark: mat.define-theme((
-    color: (
-      theme-type: dark,
-      primary:  mat.$azure-palette,
-      tertiary: mat.$spring-green-palette,
-    ),
-    density: ( scale: 0 ),
-  ));
+  $dark: mat.define-theme(
+    (
+      color: (
+        theme-type: dark,
+        primary: mat.$azure-palette,
+        tertiary: mat.$spring-green-palette,
+      ),
+      density: (
+        scale: 0,
+      ),
+    )
+  );
   @include mat.all-component-colors($dark);
 }

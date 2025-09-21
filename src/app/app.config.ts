@@ -1,14 +1,20 @@
-import { ApplicationConfig, provideBrowserGlobalErrorListeners, provideZonelessChangeDetection, isDevMode } from '@angular/core';
+import {
+  ApplicationConfig,
+  provideBrowserGlobalErrorListeners,
+  provideZonelessChangeDetection,
+  isDevMode,
+} from '@angular/core';
 import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
 import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
 import { provideServiceWorker } from '@angular/service-worker';
 import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
+
+// TODO: AFTER develop the backend This section be able to extend
 // TODO: USE IT WHEN THE REAL SERVER BE READY...
 // import { AuthTokenInterceptor } from '@core/interceptors/auth-token.interceptor';
 // import { HttpErrorInterceptor } from '@core/interceptors/http-error.interceptor';
-
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -22,14 +28,16 @@ export const appConfig: ApplicationConfig = {
     }),
     provideHttpClient(
       withFetch(),
+      // TODO: AFTER develop the backend This section be able to extend
+      // TODO: USE IT WHEN THE REAL SERVER BE READY...
       withInterceptors([
-        // TODO: USE IT WHEN THE REAL SERVER BE READY...
-        // AuthTokenInterceptor,
-        // HttpErrorInterceptor,
+        //   AuthTokenInterceptor,
+        //   HttpErrorInterceptor,
       ]),
-    ), provideServiceWorker('ngsw-worker.js', {
+    ),
+    provideServiceWorker('ngsw-worker.js', {
       enabled: !isDevMode(),
-      registrationStrategy: 'registerWhenStable:30000'
+      registrationStrategy: 'registerWhenStable:30000',
     }),
   ],
 };

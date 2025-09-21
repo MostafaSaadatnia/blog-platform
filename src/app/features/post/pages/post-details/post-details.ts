@@ -4,7 +4,7 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
-import { PostsStore } from '../../store/posts.store';
+import { PostsStore } from '@features/post/store/posts.store';
 import { MarkdownPipe } from '@shared/pipes/markdown.pipe';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '@shared/components/confirm-dialog/confirm-dialog';
@@ -13,17 +13,61 @@ import { CommentsThreadComponent } from '@features/post/components/comments-thre
 @Component({
   selector: 'app-post-detail',
   standalone: true,
-  imports: [CommonModule, RouterModule, MatButtonModule, MatIconModule, MatCardModule, MarkdownPipe, CommentsThreadComponent],
+  imports: [
+    CommonModule,
+    RouterModule,
+    MatButtonModule,
+    MatIconModule,
+    MatCardModule,
+    MarkdownPipe,
+    CommentsThreadComponent,
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  styles: [`
-    .container { max-width: 900px; margin-inline: auto; padding: 1rem; }
-    .header { display:flex; align-items:center; justify-content:space-between; gap:.75rem; margin-bottom:1rem; }
-    .title { font-size:1.75rem; font-weight:700; letter-spacing:-.01em; margin:0; }
-    .meta { opacity:.7; font-size:.85rem; display:flex; gap:.5rem; align-items:center; }
-    .body { white-space: pre-line; line-height:1.7; font-size:1.02rem; }
-    .panel { padding: 1rem; border-radius: var(--app-radius); border: var(--app-border); background: var(--app-surface); }
-    .actions { display:flex; gap:.5rem; }
-  `],
+  styles: [
+    `
+      .container {
+        max-width: 900px;
+        margin-inline: auto;
+        padding: 1rem;
+      }
+      .header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.75rem;
+        margin-bottom: 1rem;
+      }
+      .title {
+        font-size: 1.75rem;
+        font-weight: 700;
+        letter-spacing: -0.01em;
+        margin: 0;
+      }
+      .meta {
+        opacity: 0.7;
+        font-size: 0.85rem;
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+        margin: 1rem 0.5rem;
+      }
+      .body {
+        white-space: pre-line;
+        line-height: 1.7;
+        font-size: 1.02rem;
+      }
+      .panel {
+        padding: 1rem;
+        border-radius: var(--app-radius);
+        border: var(--app-border);
+        background: var(--app-surface);
+      }
+      .actions {
+        display: flex;
+        gap: 0.5rem;
+      }
+    `,
+  ],
   template: `
     <section class="container">
       @if (store.current(); as c) {
@@ -33,7 +77,12 @@ import { CommentsThreadComponent } from '@features/post/components/comments-thre
             <a mat-stroked-button color="primary" [routerLink]="['/editor', c.slug]">
               <mat-icon>edit</mat-icon> Edit
             </a>
-            <button mat-stroked-button color="warn" (click)="onDelete(c.slug)" [disabled]="store.loading()">
+            <button
+              mat-stroked-button
+              color="warn"
+              (click)="onDelete(c.slug)"
+              [disabled]="store.loading()"
+            >
               <mat-icon>delete</mat-icon> Delete
             </button>
             <a mat-button routerLink="/posts">Back</a>
@@ -43,14 +92,14 @@ import { CommentsThreadComponent } from '@features/post/components/comments-thre
         <div class="meta">
           <span>{{ c.author.username || '—' }}</span>
           <span>•</span>
-          <span>{{ c.createdAt | date:'medium' }}</span>
+          <span>{{ c.createdAt | date: 'medium' }}</span>
         </div>
 
         <mat-card class="panel">
-          <div class="prose" [innerHTML]="(c.body || c.description) | markdown"></div>
+          <div class="prose" [innerHTML]="c.body || c.description | markdown"></div>
         </mat-card>
 
-             <mat-card class="panel" style="margin-top:12px;">
+        <mat-card class="panel" style="margin-top:12px;">
           <h2 style="margin:0 0 8px; font-weight:700;">Comments</h2>
           <app-comments-thread [slug]="c.slug" [canPost]="true" [allowDelete]="true" />
         </mat-card>
@@ -58,7 +107,7 @@ import { CommentsThreadComponent } from '@features/post/components/comments-thre
         <div class="panel">Loading…</div>
       }
     </section>
-  `
+  `,
 })
 export class PostDetailComponent {
   readonly store = inject(PostsStore);
@@ -76,5 +125,9 @@ export class PostDetailComponent {
     if (!ok) return;
     this.store.deleteOne(slug);
     this.router.navigate(['/posts']);
+  }
+
+  onFav(slug: string) {
+    this.store.toggleFavorite(slug);
   }
 }

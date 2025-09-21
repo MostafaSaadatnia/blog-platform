@@ -6,7 +6,7 @@ import { signal } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { PostEditorComponent } from './editor';
-import { ArticleDto } from '@/shared/models/article.model';
+import { ArticleDto } from '@shared/dtos/article.dto';
 
 class StoreMock {
   loadingSig = signal(false);
@@ -16,12 +16,23 @@ class StoreMock {
   current = this.currentSig as any;
 
   loadOne = vi.fn<(slug: string) => void>();
-  createOne = vi.fn<
-    (payload: Partial<ArticleDto>, onDone?: (slug: string) => void, onError?: (err: unknown) => void) => void
-  >();
-  updateOne = vi.fn<
-    (slug: string, patch: Partial<ArticleDto>, onDone?: (slug: string) => void, onError?: (err: unknown) => void) => void
-  >();
+  createOne =
+    vi.fn<
+      (
+        payload: Partial<ArticleDto>,
+        onDone?: (slug: string) => void,
+        onError?: (err: unknown) => void,
+      ) => void
+    >();
+  updateOne =
+    vi.fn<
+      (
+        slug: string,
+        patch: Partial<ArticleDto>,
+        onDone?: (slug: string) => void,
+        onError?: (err: unknown) => void,
+      ) => void
+    >();
 }
 
 function makeArticle(overrides: Partial<ArticleDto> = {}): ArticleDto {
@@ -68,22 +79,29 @@ describe('PostEditorComponent', () => {
 
   it('renders form fields and disables Save when invalid', () => {
     const { fixture } = setup({});
-    const title = fixture.debugElement.query(By.css('input[formControlName="title"]')).nativeElement as HTMLInputElement;
-    const body = fixture.debugElement.query(By.css('textarea[formControlName="body"]')).nativeElement as HTMLTextAreaElement;
+    const title = fixture.debugElement.query(By.css('input[formControlName="title"]'))
+      .nativeElement as HTMLInputElement;
+    const body = fixture.debugElement.query(By.css('textarea[formControlName="body"]'))
+      .nativeElement as HTMLTextAreaElement;
 
     expect(title).toBeTruthy();
     expect(body).toBeTruthy();
 
-    const saveBtn = fixture.debugElement.query(By.css('button[type="submit"], button[mat-flat-button]')).nativeElement as HTMLButtonElement;
+    const saveBtn = fixture.debugElement.query(
+      By.css('button[type="submit"], button[mat-flat-button]'),
+    ).nativeElement as HTMLButtonElement;
     expect(saveBtn.disabled).toBe(true);
   });
 
   it('create mode: submits payload and calls store.createOne with callbacks', () => {
     const { fixture, component } = setup({});
 
-    const title = fixture.debugElement.query(By.css('input[formControlName="title"]')).nativeElement as HTMLInputElement;
-    const desc = fixture.debugElement.query(By.css('input[formControlName="description"]')).nativeElement as HTMLInputElement;
-    const body = fixture.debugElement.query(By.css('textarea[formControlName="body"]')).nativeElement as HTMLTextAreaElement;
+    const title = fixture.debugElement.query(By.css('input[formControlName="title"]'))
+      .nativeElement as HTMLInputElement;
+    const desc = fixture.debugElement.query(By.css('input[formControlName="description"]'))
+      .nativeElement as HTMLInputElement;
+    const body = fixture.debugElement.query(By.css('textarea[formControlName="body"]'))
+      .nativeElement as HTMLTextAreaElement;
 
     title.value = 'New Title';
     title.dispatchEvent(new Event('input'));
@@ -118,11 +136,15 @@ describe('PostEditorComponent', () => {
     const { fixture, component } = setup({ slug: 's1' });
 
     expect(store.loadOne).toHaveBeenCalledWith('s1');
-    store.currentSig.set(makeArticle({ slug: 's1', title: 'Old', description: 'OldD', body: 'OldB' }));
+    store.currentSig.set(
+      makeArticle({ slug: 's1', title: 'Old', description: 'OldD', body: 'OldB' }),
+    );
     fixture.detectChanges();
 
-    const title = fixture.debugElement.query(By.css('input[formControlName="title"]')).nativeElement as HTMLInputElement;
-    const body = fixture.debugElement.query(By.css('textarea[formControlName="body"]')).nativeElement as HTMLTextAreaElement;
+    const title = fixture.debugElement.query(By.css('input[formControlName="title"]'))
+      .nativeElement as HTMLInputElement;
+    const body = fixture.debugElement.query(By.css('textarea[formControlName="body"]'))
+      .nativeElement as HTMLTextAreaElement;
 
     expect(title.value).toBe('Old');
     expect(body.value).toBe('OldB');

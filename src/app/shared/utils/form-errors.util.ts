@@ -1,9 +1,5 @@
 import { AbstractControl, FormGroup } from '@angular/forms';
-
-export type ServerErrors =
-  | { errors?: Record<string, string[] | string> }
-  | { message?: string; error?: any }
-  | any;
+import { ServerErrors } from '@shared/types/server-errors.type';
 
 export function applyServerErrors(form: FormGroup, payload: ServerErrors): string[] {
   const messages: string[] = [];

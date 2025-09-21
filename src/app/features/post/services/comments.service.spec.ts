@@ -23,7 +23,7 @@ describe('CommentsService', () => {
 
   it('list should GET /articles/:slug/comments and map to comments[]', () => {
     let res: any[] | undefined;
-    svc.list('my-slug').subscribe(r => (res = r));
+    svc.list('my-slug').subscribe((r) => (res = r));
 
     const req = http.expectOne(url('/articles/my-slug/comments'));
     expect(req.request.method).toBe('GET');
@@ -44,7 +44,7 @@ describe('CommentsService', () => {
 
   it('add should POST { comment: { body } } and map to comment', () => {
     let res: any | undefined;
-    svc.add('abc', 'Nice post').subscribe(r => (res = r));
+    svc.add('abc', 'Nice post').subscribe((r) => (res = r));
 
     const req = http.expectOne(url('/articles/abc/comments'));
     expect(req.request.method).toBe('POST');

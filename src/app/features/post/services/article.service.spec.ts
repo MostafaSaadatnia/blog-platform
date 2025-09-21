@@ -28,15 +28,25 @@ describe('ArticleService', () => {
   }
 
   it('getArticles should request with limit/offset and return payload', () => {
-    const page = 2, pageSize = 5;
+    const page = 2,
+      pageSize = 5;
     const expectedUrl = fullUrl('/articles', { limit: pageSize, offset: (page - 1) * pageSize });
     let result: ArticlesResponse | undefined;
 
-    svc.getArticles(page, pageSize).subscribe(r => (result = r));
+    svc.getArticles(page, pageSize).subscribe((r) => (result = r));
     const req = http.expectOne(expectedUrl);
     expect(req.request.method).toBe('GET');
 
-    const article: ArticleDto = { slug: 's', title: 'T', description: 'D', body: 'B', tagList: [], createdAt: '', updatedAt: '', author: { username: 'u' } };
+    const article: ArticleDto = {
+      slug: 's',
+      title: 'T',
+      description: 'D',
+      body: 'B',
+      tagList: [],
+      createdAt: '',
+      updatedAt: '',
+      author: { username: 'u' },
+    };
     req.flush({ articles: [article], articlesCount: 1 } satisfies ArticlesResponse);
 
     expect(result).toBeTruthy();
@@ -47,12 +57,21 @@ describe('ArticleService', () => {
 
   it('getArticle should map {article} envelope', () => {
     let res: ArticleDto | undefined;
-    svc.getArticle('abc').subscribe(r => (res = r));
+    svc.getArticle('abc').subscribe((r) => (res = r));
 
     const req = http.expectOne(fullUrl('/articles/abc'));
     expect(req.request.method).toBe('GET');
 
-    const payload: ArticleDto = { slug: 'abc', title: 'Hello', description: 'd', body: 'b', tagList: ['x'], createdAt: '', updatedAt: '', author: { username: 'u' } };
+    const payload: ArticleDto = {
+      slug: 'abc',
+      title: 'Hello',
+      description: 'd',
+      body: 'b',
+      tagList: ['x'],
+      createdAt: '',
+      updatedAt: '',
+      author: { username: 'u' },
+    };
     req.flush({ article: payload });
 
     expect(res).toBeTruthy();
@@ -61,16 +80,30 @@ describe('ArticleService', () => {
   });
 
   it('createArticle should POST body wrapped in {article} and map envelope', () => {
-    const input: Partial<ArticleDto> = { title: 'New', body: 'Body', description: 'Desc', tagList: ['a'] };
+    const input: Partial<ArticleDto> = {
+      title: 'New',
+      body: 'Body',
+      description: 'Desc',
+      tagList: ['a'],
+    };
     let res: ArticleDto | undefined;
 
-    svc.createArticle(input).subscribe(r => (res = r));
+    svc.createArticle(input).subscribe((r) => (res = r));
 
     const req = http.expectOne(fullUrl('/articles'));
     expect(req.request.method).toBe('POST');
     expect(req.request.body).toEqual({ article: input });
 
-    const created: ArticleDto = { slug: 'new-slug', title: 'New', description: 'Desc', body: 'Body', tagList: ['a'], createdAt: '', updatedAt: '', author: { username: 'u' } };
+    const created: ArticleDto = {
+      slug: 'new-slug',
+      title: 'New',
+      description: 'Desc',
+      body: 'Body',
+      tagList: ['a'],
+      createdAt: '',
+      updatedAt: '',
+      author: { username: 'u' },
+    };
     req.flush({ article: created });
 
     expect(res).toBeTruthy();
@@ -81,13 +114,22 @@ describe('ArticleService', () => {
     const patch = { title: 'Updated' };
     let res: ArticleDto | undefined;
 
-    svc.updateArticle('slug-1', patch).subscribe(r => (res = r));
+    svc.updateArticle('slug-1', patch).subscribe((r) => (res = r));
 
     const req = http.expectOne(fullUrl('/articles/slug-1'));
     expect(req.request.method).toBe('PUT');
     expect(req.request.body).toEqual({ article: patch });
 
-    const updated: ArticleDto = { slug: 'slug-1', title: 'Updated', description: '', body: '', tagList: [], createdAt: '', updatedAt: '', author: { username: 'u' } };
+    const updated: ArticleDto = {
+      slug: 'slug-1',
+      title: 'Updated',
+      description: '',
+      body: '',
+      tagList: [],
+      createdAt: '',
+      updatedAt: '',
+      author: { username: 'u' },
+    };
     req.flush({ article: updated });
 
     expect(res).toBeTruthy();

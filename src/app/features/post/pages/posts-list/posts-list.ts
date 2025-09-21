@@ -8,9 +8,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 
-import { PostCardComponent } from '@/features/post/components/post-card/post-card';
+import { PostCardComponent } from '@features/post/components/post-card/post-card';
 import { PostsStore } from '@features/post/store/posts.store';
-
 
 @Component({
   selector: 'app-posts-list',
@@ -25,16 +24,59 @@ import { PostsStore } from '@features/post/store/posts.store';
     PostCardComponent,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  styles: [`
-    .header { display:flex; align-items:center; justify-content:space-between; gap:.75rem; margin-bottom:1rem; }
-    .title { font-size:1.5rem; font-weight:600; letter-spacing:-.01em; margin:0; }
-    .grid { display:grid; gap:1rem; grid-template-columns:repeat(1,minmax(0,1fr)); }
-    @media (min-width:768px){ .grid{ grid-template-columns:repeat(2,minmax(0,1fr)); } }
-    @media (min-width:1024px){ .grid{ grid-template-columns:repeat(3,minmax(0,1fr)); } }
-    .center { display:flex; align-items:center; justify-content:center; }
-    .empty { opacity:.7; padding:4rem 0; text-align:center; display:grid; gap:.5rem; place-items:center; }
-    .footer { margin-top:1rem; display:flex; align-items:center; justify-content:space-between; gap:.75rem; flex-wrap:wrap; }
-  `],
+  styles: [
+    `
+      .header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.75rem;
+        margin-bottom: 1rem;
+      }
+      .title {
+        font-size: 1.5rem;
+        font-weight: 600;
+        letter-spacing: -0.01em;
+        margin: 0;
+      }
+      .grid {
+        display: grid;
+        gap: 1rem;
+        grid-template-columns: repeat(1, minmax(0, 1fr));
+      }
+      @media (min-width: 768px) {
+        .grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+      @media (min-width: 1024px) {
+        .grid {
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+      }
+      .center {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .empty {
+        opacity: 0.7;
+        padding: 4rem 0;
+        text-align: center;
+        display: grid;
+        gap: 0.5rem;
+        place-items: center;
+      }
+      .footer {
+        margin-top: 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.75rem;
+        flex-wrap: wrap;
+      }
+    `,
+  ],
   template: `
     <section class="container">
       <header class="header">
@@ -83,14 +125,16 @@ import { PostsStore } from '@features/post/store/posts.store';
         ></mat-paginator>
       </footer>
     </section>
-  `
+  `,
 })
 export default class PostsList {
   readonly store = inject(PostsStore) as InstanceType<typeof PostsStore>;
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
 
-  private readonly qpm = toSignal(this.route.queryParamMap, { initialValue: this.route.snapshot.queryParamMap });
+  private readonly qpm = toSignal(this.route.queryParamMap, {
+    initialValue: this.route.snapshot.queryParamMap,
+  });
 
   // Signal from store (no select)
   readonly articles = this.store.articles;

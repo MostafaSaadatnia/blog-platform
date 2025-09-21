@@ -7,7 +7,7 @@ import { signal } from '@angular/core';
 import { of } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { PostDetailComponent } from './post-details';
-import { ArticleDto } from '@/shared/models/article.model';
+import { ArticleDto } from '@shared/dtos/article.dto';
 
 class StoreMock {
   loading = signal(false);
@@ -51,7 +51,10 @@ describe('PostDetailComponent', () => {
         { provide: ActivatedRoute, useValue: { snapshot: { params } } },
         { provide: Router, useValue: router },
         { provide: MatDialog, useValue: dialog },
-        { provide: (PostDetailComponent as any).ɵcmp.providers?.[0]?.useToken ?? class {}, useValue: store },
+        {
+          provide: (PostDetailComponent as any).ɵcmp.providers?.[0]?.useToken ?? class {},
+          useValue: store,
+        },
       ],
     });
 

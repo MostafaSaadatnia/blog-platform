@@ -78,7 +78,7 @@ describe('App (SSR-aware root component)', () => {
   it('should show palette icon button (menu trigger) in toolbar', () => {
     const { fixture } = setup('browser');
     const trigger = fixture.debugElement.query(
-      By.css('button[mat-icon-button][aria-label="Theme"]')
+      By.css('button[mat-icon-button][aria-label="Theme"]'),
     );
     expect(trigger).toBeTruthy();
     const icon = trigger.nativeElement.querySelector('mat-icon');
@@ -88,15 +88,12 @@ describe('App (SSR-aware root component)', () => {
   it('should reflect isDark() in template (icon name changes)', () => {
     const { fixture, theme } = setup('browser');
 
-  
     theme.isDark = vi.fn(() => false);
     fixture.detectChanges();
 
-   
     const comp = fixture.componentInstance;
     comp.toggleDark();
     expect((theme as any).toggleDark).toHaveBeenCalled();
-
 
     (theme.isDark as any) = vi.fn(() => true);
     fixture.detectChanges();

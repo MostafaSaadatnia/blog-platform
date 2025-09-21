@@ -1,13 +1,13 @@
 name: Deploy Angular to GitHub Pages
 on:
   push:
-    branches: [ main ]
+    branches: [main]
 permissions:
   contents: read
   pages: write
   id-token: write
 concurrency:
-  group: "pages"
+  group: 'pages'
   cancel-in-progress: true
 
 jobs:
@@ -23,7 +23,6 @@ jobs:
 
       - run: npm ci
 
-
       - run: npm run build -- --configuration=pages
 
       - name: Choose artifact root
@@ -34,7 +33,6 @@ jobs:
           else
             echo "ROOT=dist/pages" >> $GITHUB_OUTPUT
           fi
-
 
       - name: Add SPA 404 and nojekyll
         run: |

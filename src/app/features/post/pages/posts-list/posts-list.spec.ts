@@ -5,7 +5,7 @@ import { ActivatedRoute, Router, convertToParamMap } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { signal } from '@angular/core';
 import { By } from '@angular/platform-browser';
-import { ArticleDto } from '@/shared/models/article.model';
+import { ArticleDto } from '@shared/dtos/article.dto';
 
 class StoreMock {
   page = signal(1);
@@ -31,7 +31,13 @@ describe('PostsList', () => {
     TestBed.configureTestingModule({
       imports: [PostsList, NoopAnimationsModule],
       providers: [
-        { provide: ActivatedRoute, useValue: { snapshot: { queryParamMap: convertToParamMap(qp) }, queryParamMap: qpm$.asObservable() } },
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            snapshot: { queryParamMap: convertToParamMap(qp) },
+            queryParamMap: qpm$.asObservable(),
+          },
+        },
         { provide: Router, useValue: router },
         { provide: (PostsList as any).ɵcmp.providers?.[0]?.useToken ?? class {}, useValue: store },
       ],

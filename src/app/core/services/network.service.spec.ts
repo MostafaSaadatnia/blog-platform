@@ -8,7 +8,7 @@ function setNavigatorOnline(value: boolean) {
 
 @Component({
   standalone: true,
-  template: ``
+  template: ``,
 })
 class HostComponent {
   svc = inject(NetworkService);
@@ -25,7 +25,7 @@ describe('NetworkService (browser platform)', () => {
 
     TestBed.configureTestingModule({
       imports: [HostComponent],
-      providers: [{ provide: PLATFORM_ID, useValue: 'browser' }]
+      providers: [{ provide: PLATFORM_ID, useValue: 'browser' }],
     });
   });
 
@@ -76,7 +76,7 @@ describe('NetworkService (server platform)', () => {
     addSpy = vi.spyOn(window, 'addEventListener');
     TestBed.configureTestingModule({
       imports: [HostComponent],
-      providers: [{ provide: PLATFORM_ID, useValue: 'server' }]
+      providers: [{ provide: PLATFORM_ID, useValue: 'server' }],
     });
   });
 
