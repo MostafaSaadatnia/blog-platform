@@ -11,15 +11,23 @@ import { MatDividerModule } from '@angular/material/divider';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterModule, MatToolbarModule, MatButtonModule, MatIconModule, MatToolbarModule, MatButtonModule, MatMenuModule, MatDividerModule, OnlineOfflineToastComponent],
+  imports: [
+    RouterModule,
+    MatToolbarModule,
+    MatButtonModule,
+    MatIconModule,
+    MatToolbarModule,
+    MatButtonModule,
+    MatMenuModule,
+    MatDividerModule,
+    OnlineOfflineToastComponent,
+  ],
   template: `
-      <mat-toolbar color="primary" class="app-toolbar">
+    <mat-toolbar color="primary" class="app-toolbar">
       <button mat-button routerLink="/">Blog Platform</button>
       <span style="flex:1"></span>
       <a mat-button routerLink="/posts">Posts</a>
-      <a mat-stroked-button color="accent" routerLink="/editor">
-        <mat-icon>add</mat-icon> New
-      </a>
+      <a mat-stroked-button color="accent" routerLink="/editor"> <mat-icon>add</mat-icon> New </a>
 
       <button mat-icon-button [matMenuTriggerFor]="brandMenu" aria-label="Theme">
         <mat-icon>palette</mat-icon>
@@ -35,18 +43,21 @@ import { MatDividerModule } from '@angular/material/divider';
     <main class="app-main">
       <div class="app-container">
         <router-outlet />
-    <app-online-offline-toast />
-    </div>
+        <app-online-offline-toast />
+      </div>
     </main>
-
   `,
-  styles: [`
-    .spacer { flex: 1 1 auto; }
-  `]
+  styles: [
+    `
+      .spacer {
+        flex: 1 1 auto;
+      }
+    `,
+  ],
 })
 export class App implements OnInit {
   protected theme = inject(ThemeService);
-  constructor(@Inject(PLATFORM_ID) private platformId: object) { }
+  constructor(@Inject(PLATFORM_ID) private platformId: object) {}
 
   ngOnInit(): void {
     if (isPlatformBrowser(this.platformId)) {
@@ -54,6 +65,10 @@ export class App implements OnInit {
     }
   }
 
-  pick(id: 'aurora' | 'ink' | 'sunset') { this.theme.setBrand(id); }
-  toggleDark() { this.theme.toggleDark(); }
+  pick(id: 'aurora' | 'ink' | 'sunset') {
+    this.theme.setBrand(id);
+  }
+  toggleDark() {
+    this.theme.toggleDark();
+  }
 }

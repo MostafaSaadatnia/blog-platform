@@ -1,1 +1,1 @@
-export class PostModule { }
+export class PostModule {}

@@ -13,9 +13,11 @@ import { MatButtonModule } from '@angular/material/button';
       <button mat-button (click)="close(false)">Cancel</button>
       <button mat-flat-button color="warn" (click)="close(true)">Delete</button>
     </div>
-  `
+  `,
 })
 export class ConfirmDialogComponent {
   private ref = inject(MatDialogRef<ConfirmDialogComponent, boolean>);
-  close(v: boolean) { this.ref.close(v); }
+  close(v: boolean) {
+    this.ref.close(v);
+  }
 }

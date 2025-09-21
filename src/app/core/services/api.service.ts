@@ -6,7 +6,7 @@ export class ApiService {
   private http = inject(HttpClient);
   private readonly baseUrl = 'https://api.realworld.show/api';
 
-  private toParams(params?: Record<string, any>): Record<string, string> {
+  private toParams(params?: Record<string, unknown>): Record<string, string> {
     const out: Record<string, string> = {};
     if (!params) return out;
     for (const [k, v] of Object.entries(params)) {

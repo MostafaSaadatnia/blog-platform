@@ -11,12 +11,11 @@ export class ThemeService {
 
   constructor(
     @Inject(PLATFORM_ID) platformId: object,
-    @Inject(DOCUMENT) private doc: Document
+    @Inject(DOCUMENT) private doc: Document,
   ) {
     this.isBrowser = isPlatformBrowser(platformId);
 
     if (this.isBrowser) {
-      // read persisted state only in browser
       const saved = (localStorage.getItem('app.theme') as ThemeId) || 'aurora';
       const dark = localStorage.getItem('app.dark') === '1';
       this.current = saved;

@@ -1,5 +1,4 @@
 import { HttpInterceptorFn } from '@angular/common/http';
 
-export const HttpErrorInterceptor: HttpInterceptorFn = (req, next) =>
-  next(req).pipe(
-  );
+// TODO: AFTER develop the backend This section be able to extend
+export const HttpErrorInterceptor: HttpInterceptorFn = (req, next) => next(req).pipe();

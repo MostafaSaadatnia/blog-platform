@@ -1,4 +1,4 @@
-@use "./material-theme";
+@use './material-theme';
 
 :root {
   --app-radius: 14px;
@@ -8,10 +8,10 @@
   --app-surface-alt: #f6f7f9;
 }
 .dark-theme {
-  --app-surface: #121316;      /* card surface (already in your code) */
-  --app-surface-alt: #191b1f;  /* panel surface (already in your code) */
-  background-color: #191b1f;   /* new: dark background for page */
-  color: #e0e0e0;              /* new: light text color for dark mode */
+  --app-surface: #121316; /* card surface (already in your code) */
+  --app-surface-alt: #191b1f; /* panel surface (already in your code) */
+  background-color: #191b1f; /* new: dark background for page */
+  color: #e0e0e0; /* new: light text color for dark mode */
 }
 
 /* Surfaces */
@@ -88,17 +88,14 @@ textarea.mat-mdc-input-element {
   padding-bottom: 8px;
 }
 
-
-
-.mdc-notched-outline__notch
-{
-  border-right: none !important;  /* Remove any border (style, width) set by Tailwind */
+.mdc-notched-outline__notch {
+  border-right: none !important; /* Remove any border (style, width) set by Tailwind */
 }
 
 .mdc-text-field--focused .mdc-notched-outline__leading,
 .mdc-text-field--focused .mdc-notched-outline__notch,
 .mdc-text-field--focused .mdc-notched-outline__trailing {
-  border-right: none!important;
+  border-right: none !important;
 }
 
 /* Ensure outline border uses the theme's border color */
@@ -121,53 +118,69 @@ textarea.mat-mdc-input-element {
   border-width: 2px;
 }
 
-
-
-
 /* Prose style for markdown */
 .prose {
   line-height: 1.7;
   color: inherit;
 }
-.prose h1, .prose h2, .prose h3 {
+.prose h1,
+.prose h2,
+.prose h3 {
   font-weight: 700;
   letter-spacing: -0.01em;
-  margin: 1.2em 0 .6em;
+  margin: 1.2em 0 0.6em;
 }
-.prose h1 { font-size: 1.75rem; }
-.prose h2 { font-size: 1.35rem; }
-.prose h3 { font-size: 1.15rem; }
+.prose h1 {
+  font-size: 1.75rem;
+}
+.prose h2 {
+  font-size: 1.35rem;
+}
+.prose h3 {
+  font-size: 1.15rem;
+}
 
-.prose p, .prose ul, .prose ol, .prose blockquote, .prose pre {
-  margin: .75rem 0;
+.prose p,
+.prose ul,
+.prose ol,
+.prose blockquote,
+.prose pre {
+  margin: 0.75rem 0;
 }
-.prose ul { padding-left: 1.25rem; list-style: disc; }
-.prose ol { padding-left: 1.25rem; list-style: decimal; }
+.prose ul {
+  padding-left: 1.25rem;
+  list-style: disc;
+}
+.prose ol {
+  padding-left: 1.25rem;
+  list-style: decimal;
+}
 
 .prose blockquote {
-  padding: .5rem .75rem;
+  padding: 0.5rem 0.75rem;
   border-left: 4px solid currentColor;
-  opacity: .8;
+  opacity: 0.8;
 }
 .prose code {
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
-  font-size: .92em;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace;
+  font-size: 0.92em;
   background: color-mix(in srgb, currentColor 8%, transparent);
-  padding: .1rem .35rem;
-  border-radius: .35rem;
+  padding: 0.1rem 0.35rem;
+  border-radius: 0.35rem;
 }
 .prose pre {
   background: color-mix(in srgb, currentColor 8%, transparent);
-  padding: .75rem;
-  border-radius: .5rem;
+  padding: 0.75rem;
+  border-radius: 0.5rem;
   overflow: auto;
 }
-.prose img, .prose video {
+.prose img,
+.prose video {
   max-width: 100%;
   height: auto;
-  border-radius: .5rem;
+  border-radius: 0.5rem;
   display: block;
-  margin: .75rem 0;
+  margin: 0.75rem 0;
 }
 
 .dark-theme .prose blockquote,

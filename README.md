@@ -48,15 +48,19 @@ API: `https://api.realworld.show/api`
 ## Getting Started
 
 ### Prerequisites
+
 - Node.js ≥ 18
 - NPM or PNPM
 - (Windows) Git Bash recommended for running Husky shell hooks
 
 ### Install
+
 ```bash
 npm i
 ```
+
 ## Development (SSR)
+
 ```bash
 npm start
 
@@ -64,19 +68,23 @@ http://localhost:4200
 ```
 
 ## Build
-npm run build         # client build (SSR output mode)
-npm run build:ssr     # client + server bundle
+
+npm run build # client build (SSR output mode)
+npm run build:ssr # client + server bundle
 
 ## Serve SSR (dev)
+
 npm run serve:ssr
 
 ## Tests
+
 ```
 npm test          # vitest watch
 npm run test:ci   # CI mode with coverage
 ```
 
 ## Project Structure
+
 ```
 src/
 ├─ app/
@@ -104,6 +112,7 @@ src/
 ├─ styles.scss                   # tokens + global polish + theme use
 └─ material-theme.scss           # Material 3 theme (light/dark)
 ```
+
 ## Architecture
 
 ### Separation of Concerns
@@ -177,10 +186,12 @@ src/
 - Component tests for validation (e.g., Editor).
 
 Run:
+
 ```bash
 npm test
 npm run test:ci
 ```
+
 ## Developer Experience
 
 - ESLint + Prettier for consistency.
@@ -205,23 +216,23 @@ npm run test:ci
 
 ### Challenge Checklist
 
--  Angular (>=15) with modular, scalable architecture (Core/Shared/Feature)
+- Angular (>=15) with modular, scalable architecture (Core/Shared/Feature)
 
--  Clean Code & Separation of Concerns (Service/Store/UI)
+- Clean Code & Separation of Concerns (Service/Store/UI)
 
--  State Management with Signals / NgRx Signals
+- State Management with Signals / NgRx Signals
 
--  Performance: Lazy Loading, OnPush, @for track keys
+- Performance: Lazy Loading, OnPush, @for track keys
 
--  UX/UI: Material 3, responsive design, dark/light themes
+- UX/UI: Material 3, responsive design, dark/light themes
 
--  Post Management: create/edit/delete with Reactive Forms + validation + server errors
+- Post Management: create/edit/delete with Reactive Forms + validation + server errors
 
--  Comments thread display (+ add/delete when authenticated)
+- Comments thread display (+ add/delete when authenticated)
 
--  Unit tests: at least one Service and one Component
+- Unit tests: at least one Service and one Component
 
--  Documentation: this README explains architecture & tech choices
+- Documentation: this README explains architecture & tech choices
 
 ### License
 

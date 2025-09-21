@@ -26,10 +26,7 @@
                 "input": "public"
               }
             ],
-            "styles": [
-              "src/styles.scss",
-              "src/tailwind.css"
-            ],
+            "styles": ["src/styles.scss", "src/tailwind.css"],
             "server": "src/main.server.ts",
             "outputMode": "server",
             "ssr": {
@@ -97,19 +94,13 @@
                 "input": "public"
               }
             ],
-            "styles": [
-              "src/styles.scss",
-              "src/tailwind.css"
-            ]
+            "styles": ["src/styles.scss", "src/tailwind.css"]
           }
         },
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
-            "lintFilePatterns": [
-              "src/**/*.ts",
-              "src/**/*.html"
-            ]
+            "lintFilePatterns": ["src/**/*.ts", "src/**/*.html"]
           }
         }
       }
@@ -117,8 +108,6 @@
   },
   "cli": {
     "analytics": "cf7cb080-1e3a-433d-9990-642d07fe78c2",
-    "schematicCollections": [
-      "angular-eslint"
-    ]
+    "schematicCollections": ["angular-eslint"]
   }
 }

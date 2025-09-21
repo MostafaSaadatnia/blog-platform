@@ -4,10 +4,6 @@ import { provideHttpClient } from '@angular/common/http';
 
 export function initTestBed(providers: unknown[] = []) {
   TestBed.configureTestingModule({
-    providers: [
-      provideRouter([]),
-      provideHttpClient(),
-      ...providers
-    ]
+    providers: [provideRouter([]), provideHttpClient(), ...providers],
   });
 }
